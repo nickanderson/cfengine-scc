@@ -1,0 +1,375 @@
+V-230221 CAT I RHEL 8 must be a vendor-supported release.
+V-230222 CAT II RHEL 8 vendor packaged system security patches and updates must be installed and up to date.
+V-230223 CAT I RHEL 8 must implement NIST FIPS-validated cryptography for the following: to provision digital signatures, to generate cryptographic hashes, and to protect data requiring data-at-rest protections in accordance with applicable federal laws, Executive Orders, directives, policies, regulations, and standards.
+V-230224 CAT II All RHEL 8 local disk partitions must implement cryptographic mechanisms to prevent unauthorized disclosure or modification of all information that requires at rest protection.
+V-230225 CAT II RHEL 8 must display the Standard Mandatory DoD Notice and Consent Banner before granting local or remote access to the system via a ssh logon.
+V-230226 CAT II RHEL 8 must display the Standard Mandatory DoD Notice and Consent Banner before granting local or remote access to the system via a graphical user logon.
+V-230227 CAT II RHEL 8 must display the Standard Mandatory DoD Notice and Consent Banner before granting local or remote access to the system via a command line user logon.
+V-230228 CAT II All RHEL 8 remote access methods must be monitored.
+V-230229 CAT II RHEL 8, for PKI-based authentication, must validate certificates by constructing a certification path (which includes status information) to an accepted trust anchor.
+V-230230 CAT II RHEL 8, for certificate-based authentication, must enforce authorized access to the corresponding private key.
+V-230231 CAT II RHEL 8 must encrypt all stored passwords with a FIPS 140-2 approved cryptographic hashing algorithm.
+V-230232 CAT II RHEL 8 must employ FIPS 140-2 approved cryptographic hashing algorithms for all stored passwords.
+V-230233 CAT II The RHEL 8 shadow password suite must be configured to use a sufficient number of hashing rounds.
+V-230234 CAT I RHEL 8 operating systems booted with United Extensible Firmware Interface (UEFI) must require authentication upon booting into single-user mode and maintenance.
+V-230235 CAT I RHEL 8 operating systems booted with a BIOS must require authentication upon booting into single-user and maintenance modes.
+V-230236 CAT II RHEL 8 operating systems must require authentication upon booting into rescue mode.
+V-230237 CAT II The RHEL 8 pam_unix.so module must be configured in the password-auth file to use a FIPS 140-2 approved cryptographic hashing algorithm for system authentication.
+V-230238 CAT II RHEL 8 must prevent system daemons from using Kerberos for authentication.
+V-230239 CAT II The krb5-workstation package must not be installed on RHEL 8.
+V-230240 CAT II RHEL 8 must use a Linux Security Module configured to enforce limits on system services.
+V-230241 CAT III RHEL 8 must have policycoreutils package installed.
+V-230243 CAT II A sticky bit must be set on all RHEL 8 public directories to prevent unauthorized and unintended information transferred via shared system resources.
+V-230244 CAT II RHEL 8 must be configured so that all network connections associated with SSH traffic terminate after becoming unresponsive.
+V-230245 CAT II The RHEL 8 /var/log/messages file must have mode 0640 or less permissive.
+V-230246 CAT II The RHEL 8 /var/log/messages file must be owned by root.
+V-230247 CAT II The RHEL 8 /var/log/messages file must be group-owned by root.
+V-230248 CAT II The RHEL 8 /var/log directory must have mode 0755 or less permissive.
+V-230249 CAT II The RHEL 8 /var/log directory must be owned by root.
+V-230250 CAT II The RHEL 8 /var/log directory must be group-owned by root.
+V-230251 CAT II The RHEL 8 SSH server must be configured to use only Message Authentication Codes (MACs) employing FIPS 140-2 validated cryptographic hash algorithms.
+V-230252 CAT II The RHEL 8 operating system must implement DoD-approved encryption to protect the confidentiality of SSH server connections.
+V-230253 CAT III RHEL 8 must ensure the SSH server uses strong entropy.
+V-230254 CAT II The RHEL 8 operating system must implement DoD-approved encryption in the OpenSSL package.
+V-230255 CAT II The RHEL 8 operating system must implement DoD-approved TLS encryption in the OpenSSL package.
+V-230256 CAT II The RHEL 8 operating system must implement DoD-approved TLS encryption in the GnuTLS package.
+V-230257 CAT II RHEL 8 system commands must have mode 755 or less permissive.
+V-230258 CAT II RHEL 8 system commands must be owned by root.
+V-230259 CAT II RHEL 8 system commands must be group-owned by root or a system account.
+V-230260 CAT II RHEL 8 library files must have mode 755 or less permissive.
+V-230261 CAT II RHEL 8 library files must be owned by root.
+V-230262 CAT II RHEL 8 library files must be group-owned by root or a system account.
+V-230263 CAT II The RHEL 8 file integrity tool must notify the system administrator when changes to the baseline configuration or anomalies in the operation of any security functions are discovered within an organizationally defined frequency.
+V-230264 CAT I RHEL 8 must prevent the installation of software, patches, service packs, device drivers, or operating system components from a repository without verification they have been digitally signed using a certificate that is issued by a Certificate Authority (CA) that is recognized and approved by the organization.
+V-230265 CAT I RHEL 8 must prevent the installation of software, patches, service packs, device drivers, or operating system components of local packages without verification they have been digitally signed using a certificate that is issued by a Certificate Authority (CA) that is recognized and approved by the organization.
+V-230266 CAT II RHEL 8 must prevent the loading of a new kernel for later execution.
+V-230267 CAT II RHEL 8 must enable kernel parameters to enforce discretionary access control on symlinks.
+V-230268 CAT II RHEL 8 must enable kernel parameters to enforce discretionary access control on hardlinks.
+V-230269 CAT III RHEL 8 must restrict access to the kernel message buffer.
+V-230270 CAT III RHEL 8 must prevent kernel profiling by unprivileged users.
+V-230271 CAT II RHEL 8 must require users to provide a password for privilege escalation.
+V-230272 CAT II RHEL 8 must require users to reauthenticate for privilege escalation.
+V-230273 CAT II RHEL 8 must have the packages required for multifactor authentication installed.
+V-230274 CAT II RHEL 8 must implement certificate status checking for multifactor authentication.
+V-230275 CAT II RHEL 8 must accept Personal Identity Verification (PIV) credentials.
+V-230276 CAT II RHEL 8 must implement non-executable data to protect its memory from unauthorized code execution.
+V-230277 CAT II RHEL 8 must clear the page allocator to prevent use-after-free attacks.
+V-230278 CAT II RHEL 8 must disable virtual syscalls.
+V-230279 CAT II RHEL 8 must clear SLUB/SLAB objects to prevent use-after-free attacks.
+V-230280 CAT II RHEL 8 must implement address space layout randomization (ASLR) to protect its memory from unauthorized code execution.
+V-230281 CAT III YUM must remove all software components after updated versions have been installed on RHEL 8.
+V-230282 CAT II RHEL 8 must enable the SELinux targeted policy.
+V-230283 CAT I There must be no shosts.equiv files on the RHEL 8 operating system.
+V-230284 CAT I There must be no .shosts files on the RHEL 8 operating system.
+V-230285 CAT III RHEL 8 must enable the hardware random number generator entropy gatherer service.
+V-230286 CAT II The RHEL 8 SSH public host key files must have mode 0644 or less permissive.
+V-230287 CAT II The RHEL 8 SSH private host key files must have mode 0640 or less permissive.
+V-230288 CAT II The RHEL 8 SSH daemon must perform strict mode checking of home directory configuration files.
+V-230290 CAT II The RHEL 8 SSH daemon must not allow authentication using known host’s authentication.
+V-230291 CAT II The RHEL 8 SSH daemon must not allow Kerberos authentication, except to fulfill documented and validated mission requirements.
+V-230292 CAT III RHEL 8 must use a separate file system for /var.
+V-230293 CAT III RHEL 8 must use a separate file system for /var/log.
+V-230294 CAT III RHEL 8 must use a separate file system for the system audit data path.
+V-230295 CAT II A separate RHEL 8 filesystem must be used for the /tmp directory.
+V-230296 CAT II RHEL 8 must not permit direct logons to the root account using remote access via SSH.
+V-230298 CAT II The rsyslog service must be running in RHEL 8.
+V-230299 CAT II RHEL 8 must prevent files with the setuid and setgid bit set from being executed on file systems that contain user home directories.
+V-230300 CAT II RHEL 8 must prevent files with the setuid and setgid bit set from being executed on the /boot directory.
+V-230301 CAT II RHEL 8 must prevent special devices on non-root local partitions.
+V-230302 CAT II RHEL 8 must prevent code from being executed on file systems that contain user home directories.
+V-230303 CAT II RHEL 8 must prevent special devices on file systems that are used with removable media.
+V-230304 CAT II RHEL 8 must prevent code from being executed on file systems that are used with removable media.
+V-230305 CAT II RHEL 8 must prevent files with the setuid and setgid bit set from being executed on file systems that are used with removable media.
+V-230306 CAT II RHEL 8 must prevent code from being executed on file systems that are imported via Network File System (NFS).
+V-230307 CAT II RHEL 8 must prevent special devices on file systems that are imported via Network File System (NFS).
+V-230308 CAT II RHEL 8 must prevent files with the setuid and setgid bit set from being executed on file systems that are imported via Network File System (NFS).
+V-230309 CAT II Local RHEL 8 initialization files must not execute world-writable programs.
+V-230310 CAT II RHEL 8 must disable kernel dumps unless needed.
+V-230311 CAT II RHEL 8 must disable the kernel.core_pattern.
+V-230312 CAT II RHEL 8 must disable acquiring, saving, and processing core dumps.
+V-230313 CAT II RHEL 8 must disable core dumps for all users.
+V-230314 CAT II RHEL 8 must disable storing core dumps.
+V-230315 CAT II RHEL 8 must disable core dump backtraces.
+V-230316 CAT II For RHEL 8 systems using Domain Name Servers (DNS) resolution, at least two name servers must be configured.
+V-230317 CAT II Executable search paths within the initialization files of all local interactive RHEL 8 users must only contain paths that resolve to the system default or the users home directory.
+V-230318 CAT II All RHEL 8 world-writable directories must be owned by root, sys, bin, or an application user.
+V-230319 CAT II All RHEL 8 world-writable directories must be group-owned by root, sys, bin, or an application group.
+V-230320 CAT II All RHEL 8 local interactive users must have a home directory assigned in the /etc/passwd file.
+V-230321 CAT II All RHEL 8 local interactive user home directories must have mode 0750 or less permissive.
+V-230322 CAT II All RHEL 8 local interactive user home directories must be group-owned by the home directory owner’s primary group.
+V-230323 CAT II All RHEL 8 local interactive user home directories defined in the /etc/passwd file must exist.
+V-230324 CAT II All RHEL 8 local interactive user accounts must be assigned a home directory upon creation.
+V-230325 CAT II All RHEL 8 local initialization files must have mode 0740 or less permissive.
+V-230326 CAT II All RHEL 8 local files and directories must have a valid owner.
+V-230327 CAT II All RHEL 8 local files and directories must have a valid group owner.
+V-230328 CAT II A separate RHEL 8 filesystem must be used for user home directories (such as /home or an equivalent).
+V-230329 CAT I Unattended or automatic logon via the RHEL 8 graphical user interface must not be allowed.
+V-230330 CAT II RHEL 8 must not allow users to override SSH environment variables.
+V-230331 CAT II RHEL 8 temporary user accounts must be provisioned with an expiration time of 72 hours or less.
+V-230332 CAT II RHEL 8 must automatically lock an account when three unsuccessful logon attempts occur.
+V-230333 CAT II RHEL 8 must automatically lock an account when three unsuccessful logon attempts occur.
+V-230334 CAT II RHEL 8 must automatically lock an account when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230335 CAT II RHEL 8 must automatically lock an account when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230336 CAT II RHEL 8 must automatically lock an account until the locked account is released by an administrator when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230337 CAT II RHEL 8 must automatically lock an account until the locked account is released by an administrator when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230338 CAT II RHEL 8 must ensure account lockouts persist.
+V-230339 CAT II RHEL 8 must ensure account lockouts persist.
+V-230340 CAT II RHEL 8 must prevent system messages from being presented when three unsuccessful logon attempts occur.
+V-230341 CAT II RHEL 8 must prevent system messages from being presented when three unsuccessful logon attempts occur.
+V-230342 CAT II RHEL 8 must log user name information when unsuccessful logon attempts occur.
+V-230343 CAT II RHEL 8 must log user name information when unsuccessful logon attempts occur.
+V-230344 CAT II RHEL 8 must include root when automatically locking an account until the locked account is released by an administrator when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230345 CAT II RHEL 8 must include root when automatically locking an account until the locked account is released by an administrator when three unsuccessful logon attempts occur during a 15-minute time period.
+V-230346 CAT III RHEL 8 must limit the number of concurrent sessions to ten for all accounts and/or account types.
+V-230347 CAT II RHEL 8 must enable a user session lock until that user re-establishes access using established identification and authentication procedures for graphical user sessions.
+V-230348 CAT II RHEL 8 must enable a user session lock until that user re-establishes access using established identification and authentication procedures for command line sessions.
+V-230349 CAT II RHEL 8 must ensure session control is automatically started at shell initialization.
+V-230350 CAT III RHEL 8 must prevent users from disabling session control mechanisms.
+V-230351 CAT II RHEL 8 must be able to initiate directly a session lock for all connection types using smartcard when the smartcard is removed.
+V-230352 CAT II RHEL 8 must automatically lock graphical user sessions after 15 minutes of inactivity.
+V-230353 CAT II RHEL 8 must automatically lock command line user sessions after 15 minutes of inactivity.
+V-230354 CAT II RHEL 8 must prevent a user from overriding the session lock-delay setting for the graphical user interface.
+V-230355 CAT II RHEL 8 must map the authenticated identity to the user or group account for PKI-based authentication.
+V-230356 CAT II RHEL 8 must ensure the password complexity module is enabled in the password-auth file.
+V-230357 CAT II RHEL 8 must enforce password complexity by requiring that at least one uppercase character be used.
+V-230358 CAT II RHEL 8 must enforce password complexity by requiring that at least one lower-case character be used.
+V-230359 CAT II RHEL 8 must enforce password complexity by requiring that at least one numeric character be used.
+V-230360 CAT II RHEL 8 must require the maximum number of repeating characters of the same character class be limited to four when passwords are changed.
+V-230361 CAT II RHEL 8 must require the maximum number of repeating characters be limited to three when passwords are changed.
+V-230362 CAT II RHEL 8 must require the change of at least four character classes when passwords are changed.
+V-230363 CAT II RHEL 8 must require the change of at least 8 characters when passwords are changed.
+V-230364 CAT II RHEL 8 passwords must have a 24 hours/1 day minimum password lifetime restriction in /etc/shadow.
+V-230365 CAT II RHEL 8 passwords for new users or password changes must have a 24 hours/1 day minimum password lifetime restriction in /etc/login.defs.
+V-230366 CAT II RHEL 8 user account passwords must have a 60-day maximum password lifetime restriction.
+V-230367 CAT II RHEL 8 user account passwords must be configured so that existing passwords are restricted to a 60-day maximum lifetime.
+V-230368 CAT II RHEL 8 must be configured in the password-auth file to prohibit password reuse for a minimum of five generations.
+V-230369 CAT II RHEL 8 passwords must have a minimum of 15 characters.
+V-230370 CAT II RHEL 8 passwords for new users must have a minimum of 15 characters.
+V-230371 CAT II RHEL 8 duplicate User IDs (UIDs) must not exist for interactive users.
+V-230372 CAT II RHEL 8 must implement smart card logon for multifactor authentication for access to interactive accounts.
+V-230373 CAT II RHEL 8 account identifiers (individuals, groups, roles, and devices) must be disabled after 35 days of inactivity.
+V-230374 CAT II RHEL 8 must automatically expire temporary accounts within 72 hours.
+V-230375 CAT II All RHEL 8 passwords must contain at least one special character.
+V-230376 CAT II RHEL 8 must prohibit the use of cached authentications after one day.
+V-230377 CAT II RHEL 8 must prevent the use of dictionary words for passwords.
+V-230378 CAT II RHEL 8 must enforce a delay of at least four seconds between logon prompts following a failed logon attempt.
+V-230379 CAT II RHEL 8 must not have unnecessary accounts.
+V-230380 CAT I RHEL 8 must not allow accounts configured with blank or null passwords.
+V-230381 CAT III RHEL 8 must display the date and time of the last successful account logon upon logon.
+V-230382 CAT II RHEL 8 must display the date and time of the last successful account logon upon an SSH logon.
+V-230383 CAT II RHEL 8 must define default permissions for all authenticated users in such a way that the user can only read and modify their own files.
+V-230384 CAT II RHEL 8 must set the umask value to 077 for all local interactive user accounts.
+V-230385 CAT II RHEL 8 must define default permissions for logon and non-logon shells.
+V-230386 CAT II The RHEL 8 audit system must be configured to audit the execution of privileged functions and prevent all software from executing at higher privilege levels than users executing the software.
+V-230387 CAT II Cron logging must be implemented in RHEL 8.
+V-230388 CAT II The RHEL 8 System Administrator (SA) and Information System Security Officer (ISSO) (at a minimum) must be alerted of an audit processing failure event.
+V-230389 CAT II The RHEL 8 Information System Security Officer (ISSO) and System Administrator (SA) (at a minimum) must have mail aliases to be notified of an audit processing failure.
+V-230390 CAT II The RHEL 8 System must take appropriate action when an audit processing failure occurs.
+V-230392 CAT II The RHEL 8 audit system must take appropriate action when the audit storage volume is full.
+V-230393 CAT II The RHEL 8 audit system must audit local events.
+V-230394 CAT II RHEL 8 must label all off-loaded audit logs before sending them to the central log server.
+V-230395 CAT III RHEL 8 must resolve audit information before writing to disk.
+V-230396 CAT II RHEL 8 audit logs must have a mode of 0600 or less permissive to prevent unauthorized read access.
+V-230397 CAT II RHEL 8 audit logs must be owned by root to prevent unauthorized read access.
+V-230398 CAT II RHEL 8 audit logs must be group-owned by root to prevent unauthorized read access.
+V-230399 CAT II RHEL 8 audit log directory must be owned by root to prevent unauthorized read access.
+V-230400 CAT II RHEL 8 audit log directory must be group-owned by root to prevent unauthorized read access.
+V-230401 CAT II RHEL 8 audit log directory must have a mode of 0700 or less permissive to prevent unauthorized read access.
+V-230402 CAT II RHEL 8 audit system must protect auditing rules from unauthorized change.
+V-230403 CAT II RHEL 8 audit system must protect logon UIDs from unauthorized change.
+V-230404 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/shadow.
+V-230405 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/security/opasswd.
+V-230406 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/passwd.
+V-230407 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/gshadow.
+V-230408 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/group.
+V-230409 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/sudoers.
+V-230410 CAT II RHEL 8 must generate audit records for all account creations, modifications, disabling, and termination events that affect /etc/sudoers.d/.
+V-230411 CAT II The RHEL 8 audit package must be installed.
+V-230412 CAT II Successful/unsuccessful uses of the su command in RHEL 8 must generate an audit record.
+V-230413 CAT II The RHEL 8 audit system must be configured to audit any usage of the setxattr, fsetxattr, lsetxattr, removexattr, fremovexattr, and lremovexattr system calls.
+V-230418 CAT II Successful/unsuccessful uses of the chage command in RHEL 8 must generate an audit record.
+V-230419 CAT II Successful/unsuccessful uses of the chcon command in RHEL 8 must generate an audit record.
+V-230421 CAT II Successful/unsuccessful uses of the ssh-agent in RHEL 8 must generate an audit record.
+V-230422 CAT II Successful/unsuccessful uses of the passwd command in RHEL 8 must generate an audit record.
+V-230423 CAT II Successful/unsuccessful uses of the mount command in RHEL 8 must generate an audit record.
+V-230424 CAT II Successful/unsuccessful uses of the umount command in RHEL 8 must generate an audit record.
+V-230425 CAT II Successful/unsuccessful uses of the mount syscall in RHEL 8 must generate an audit record.
+V-230426 CAT II Successful/unsuccessful uses of the unix_update in RHEL 8 must generate an audit record.
+V-230427 CAT II Successful/unsuccessful uses of postdrop in RHEL 8 must generate an audit record.
+V-230428 CAT II Successful/unsuccessful uses of postqueue in RHEL 8 must generate an audit record.
+V-230429 CAT II Successful/unsuccessful uses of semanage in RHEL 8 must generate an audit record.
+V-230430 CAT II Successful/unsuccessful uses of setfiles in RHEL 8 must generate an audit record.
+V-230431 CAT II Successful/unsuccessful uses of userhelper in RHEL 8 must generate an audit record.
+V-230432 CAT II Successful/unsuccessful uses of setsebool in RHEL 8 must generate an audit record.
+V-230433 CAT II Successful/unsuccessful uses of unix_chkpwd in RHEL 8 must generate an audit record.
+V-230434 CAT II Successful/unsuccessful uses of the ssh-keysign in RHEL 8 must generate an audit record.
+V-230435 CAT II Successful/unsuccessful uses of the setfacl command in RHEL 8 must generate an audit record.
+V-230436 CAT II Successful/unsuccessful uses of the pam_timestamp_check command in RHEL 8 must generate an audit record.
+V-230437 CAT II Successful/unsuccessful uses of the newgrp command in RHEL 8 must generate an audit record.
+V-230438 CAT II Successful/unsuccessful uses of the init_module and finit_module system calls in RHEL 8 must generate an audit record.
+V-230439 CAT II Successful/unsuccessful uses of the rename, unlink, rmdir, renameat, and unlinkat system calls in RHEL 8 must generate an audit record.
+V-230444 CAT II Successful/unsuccessful uses of the gpasswd command in RHEL 8 must generate an audit record.
+V-230446 CAT II Successful/unsuccessful uses of the delete_module command in RHEL 8 must generate an audit record.
+V-230447 CAT II Successful/unsuccessful uses of the crontab command in RHEL 8 must generate an audit record.
+V-230448 CAT II Successful/unsuccessful uses of the chsh command in RHEL 8 must generate an audit record.
+V-230449 CAT II Successful/unsuccessful uses of the truncate, ftruncate, creat, open, openat, and open_by_handle_at system calls in RHEL 8 must generate an audit record.
+V-230455 CAT II Successful/unsuccessful uses of the chown, fchown, fchownat, and lchown system calls in RHEL 8 must generate an audit record.
+V-230456 CAT II Successful/unsuccessful uses of the chmod, fchmod, and fchmodat system calls in RHEL 8 must generate an audit record.
+V-230462 CAT II Successful/unsuccessful uses of the sudo command in RHEL 8 must generate an audit record.
+V-230463 CAT II Successful/unsuccessful uses of the usermod command in RHEL 8 must generate an audit record.
+V-230464 CAT II Successful/unsuccessful uses of the chacl command in RHEL 8 must generate an audit record.
+V-230465 CAT II Successful/unsuccessful uses of the kmod command in RHEL 8 must generate an audit record.
+V-230466 CAT II Successful/unsuccessful modifications to the faillock log file in RHEL 8 must generate an audit record.
+V-230467 CAT II Successful/unsuccessful modifications to the lastlog file in RHEL 8 must generate an audit record.
+V-230468 CAT III RHEL 8 must enable auditing of processes that start prior to the audit daemon.
+V-230469 CAT III RHEL 8 must allocate an audit_backlog_limit of sufficient size to capture processes that start prior to the audit daemon.
+V-230470 CAT III RHEL 8 must enable Linux audit logging for the USBGuard daemon.
+V-230471 CAT II RHEL 8 must allow only the Information System Security Manager (ISSM) (or individuals or roles appointed by the ISSM) to select which auditable events are to be audited.
+V-230472 CAT II RHEL 8 audit tools must have a mode of 0755 or less permissive.
+V-230473 CAT II RHEL 8 audit tools must be owned by root.
+V-230474 CAT II RHEL 8 audit tools must be group-owned by root.
+V-230475 CAT II RHEL 8 must use cryptographic mechanisms to protect the integrity of audit tools.
+V-230476 CAT II RHEL 8 must allocate audit record storage capacity to store at least one week of audit records, when audit records are not immediately sent to a central audit record storage facility.
+V-230477 CAT II RHEL 8 must have the packages required for offloading audit logs installed.
+V-230478 CAT II RHEL 8 must have the packages required for encrypting offloaded audit logs installed.
+V-230479 CAT II The RHEL 8 audit records must be off-loaded onto a different system or storage media from the system being audited.
+V-230480 CAT II RHEL 8 must take appropriate action when the internal event queue is full.
+V-230481 CAT II RHEL 8 must encrypt the transfer of audit records off-loaded onto a different system or media from the system being audited.
+V-230482 CAT II RHEL 8 must authenticate the remote logging server for off-loading audit logs.
+V-230483 CAT II RHEL 8 must take action when allocated audit record storage volume reaches 75 percent of the repository maximum audit record storage capacity.
+V-230484 CAT II RHEL 8 must securely compare internal information system clocks at least every 24 hours with a server synchronized to an authoritative time source, such as the United States Naval Observatory (USNO) time servers, or a time server designated for the appropriate DoD network (NIPRNet/SIPRNet), and/or the Global Positioning System (GPS).
+V-230485 CAT III RHEL 8 must disable the chrony daemon from acting as a server.
+V-230486 CAT III RHEL 8 must disable network management of the chrony daemon.
+V-230487 CAT I RHEL 8 must not have the telnet-server package installed.
+V-230488 CAT II RHEL 8 must not have any automated bug reporting tools installed.
+V-230489 CAT II RHEL 8 must not have the sendmail package installed.
+V-230491 CAT III RHEL 8 must enable mitigations against processor-based vulnerabilities.
+V-230492 CAT I RHEL 8 must not have the rsh-server package installed.
+V-230493 CAT II RHEL 8 must cover or disable the built-in or attached camera when not in use.
+V-230494 CAT III RHEL 8 must disable the asynchronous transfer mode (ATM) protocol.
+V-230495 CAT III RHEL 8 must disable the controller area network (CAN) protocol.
+V-230496 CAT III RHEL 8 must disable the stream control transmission protocol (SCTP).
+V-230497 CAT III RHEL 8 must disable the transparent inter-process communication (TIPC) protocol.
+V-230498 CAT III RHEL 8 must disable mounting of cramfs.
+V-230499 CAT III RHEL 8 must disable IEEE 1394 (FireWire) Support.
+V-230500 CAT II RHEL 8 must be configured to prohibit or restrict the use of functions, ports, protocols, and/or services, as defined in the Ports, Protocols, and Services Management (PPSM) Category Assignments List (CAL) and vulnerability assessments.
+V-230502 CAT II The RHEL 8 file system automounter must be disabled unless required.
+V-230503 CAT II RHEL 8 must be configured to disable USB mass storage.
+V-230504 CAT II A RHEL 8 firewall must employ a deny-all, allow-by-exception policy for allowing connections to other systems.
+V-230505 CAT II A firewall must be installed on RHEL 8.
+V-230506 CAT II RHEL 8 wireless network adapters must be disabled.
+V-230507 CAT II RHEL 8 Bluetooth must be disabled.
+V-230508 CAT II RHEL 8 must mount /dev/shm with the nodev option.
+V-230509 CAT II RHEL 8 must mount /dev/shm with the nosuid option.
+V-230510 CAT II RHEL 8 must mount /dev/shm with the noexec option.
+V-230511 CAT II RHEL 8 must mount /tmp with the nodev option.
+V-230512 CAT II RHEL 8 must mount /tmp with the nosuid option.
+V-230513 CAT II RHEL 8 must mount /tmp with the noexec option.
+V-230514 CAT II RHEL 8 must mount /var/log with the nodev option.
+V-230515 CAT II RHEL 8 must mount /var/log with the nosuid option.
+V-230516 CAT II RHEL 8 must mount /var/log with the noexec option.
+V-230517 CAT II RHEL 8 must mount /var/log/audit with the nodev option.
+V-230518 CAT II RHEL 8 must mount /var/log/audit with the nosuid option.
+V-230519 CAT II RHEL 8 must mount /var/log/audit with the noexec option.
+V-230520 CAT II RHEL 8 must mount /var/tmp with the nodev option.
+V-230521 CAT II RHEL 8 must mount /var/tmp with the nosuid option.
+V-230522 CAT II RHEL 8 must mount /var/tmp with the noexec option.
+V-230523 CAT II The RHEL 8 fapolicy module must be installed.
+V-230524 CAT II RHEL 8 must block unauthorized peripherals before establishing a connection.
+V-230525 CAT II A firewall must be able to protect against or limit the effects of Denial of Service (DoS) attacks by ensuring RHEL 8 can implement rate-limiting measures on impacted network interfaces.
+V-230526 CAT II All RHEL 8 networked systems must have and implement SSH to protect the confidentiality and integrity of transmitted and received information, as well as information during preparation for transmission.
+V-230527 CAT II RHEL 8 must force a frequent session key renegotiation for SSH connections to the server.
+V-230529 CAT I The x86 Ctrl-Alt-Delete key sequence must be disabled on RHEL 8.
+V-230530 CAT I The x86 Ctrl-Alt-Delete key sequence in RHEL 8 must be disabled if a graphical user interface is installed.
+V-230531 CAT I The systemd Ctrl-Alt-Delete burst key sequence in RHEL 8 must be disabled.
+V-230532 CAT II The debug-shell systemd service must be disabled on RHEL 8.
+V-230533 CAT I The Trivial File Transfer Protocol (TFTP) server package must not be installed if not required for RHEL 8 operational support.
+V-230534 CAT I The root account must be the only account having unrestricted access to the RHEL 8 system.
+V-230535 CAT II RHEL 8 must prevent IPv6 Internet Control Message Protocol (ICMP) redirect messages from being accepted.
+V-230536 CAT II RHEL 8 must not send Internet Control Message Protocol (ICMP) redirects.
+V-230537 CAT II RHEL 8 must not respond to Internet Control Message Protocol (ICMP) echoes sent to a broadcast address.
+V-230538 CAT II RHEL 8 must not forward IPv6 source-routed packets.
+V-230539 CAT II RHEL 8 must not forward IPv6 source-routed packets by default.
+V-230540 CAT II RHEL 8 must not enable IPv6 packet forwarding unless the system is a router.
+V-230541 CAT II RHEL 8 must not accept router advertisements on all IPv6 interfaces.
+V-230542 CAT II RHEL 8 must not accept router advertisements on all IPv6 interfaces by default.
+V-230543 CAT II RHEL 8 must not allow interfaces to perform Internet Control Message Protocol (ICMP) redirects by default.
+V-230544 CAT II RHEL 8 must ignore IPv6 Internet Control Message Protocol (ICMP) redirect messages.
+V-230545 CAT II RHEL 8 must disable access to network bpf syscall from unprivileged processes.
+V-230546 CAT II RHEL 8 must restrict usage of ptrace to descendant  processes.
+V-230547 CAT II RHEL 8 must restrict exposed kernel pointer addresses access.
+V-230548 CAT II RHEL 8 must disable the use of user namespaces.
+V-230549 CAT II RHEL 8 must use reverse path filtering on all IPv4 interfaces.
+V-230550 CAT II RHEL 8 must be configured to prevent unrestricted mail relaying.
+V-230551 CAT III The RHEL 8 file integrity tool must be configured to verify extended attributes.
+V-230552 CAT III The RHEL 8 file integrity tool must be configured to verify Access Control Lists (ACLs).
+V-230553 CAT II The graphical display manager must not be installed on RHEL 8 unless approved.
+V-230554 CAT II RHEL 8 network interfaces must not be in promiscuous mode.
+V-230555 CAT II RHEL 8 remote X connections for interactive users must be disabled unless to fulfill documented and validated mission requirements.
+V-230556 CAT II The RHEL 8 SSH daemon must prevent remote hosts from connecting to the proxy display.
+V-230557 CAT II If the Trivial File Transfer Protocol (TFTP) server is required, the RHEL 8 TFTP daemon must be configured to operate in secure mode.
+V-230558 CAT I A File Transfer Protocol (FTP) server package must not be installed unless mission essential on RHEL 8.
+V-230559 CAT II The gssproxy package must not be installed unless mission essential on RHEL 8.
+V-230560 CAT II The iprutils package must not be installed unless mission essential on RHEL 8.
+V-230561 CAT II The tuned package must not be installed unless mission essential on RHEL 8.
+V-237640 CAT II The krb5-server package must not be installed on RHEL 8.
+V-237641 CAT II RHEL 8 must restrict privilege elevation to authorized personnel.
+V-237642 CAT II RHEL 8 must use the invoking user's password for privilege escalation when using "sudo".
+V-237643 CAT II RHEL 8 must require re-authentication when using the "sudo" command.
+V-244519 CAT II RHEL 8 must display a banner before granting local or remote access to the system via a graphical user logon.
+V-244521 CAT II RHEL 8 operating systems booted with United Extensible Firmware Interface (UEFI) must require a unique superusers name upon booting into single-user mode and maintenance.
+V-244522 CAT II RHEL 8 operating systems booted with a BIOS must require  a unique superusers name upon booting into single-user and maintenance modes.
+V-244523 CAT II RHEL 8 operating systems must require authentication upon booting into emergency mode.
+V-244524 CAT II The RHEL 8 pam_unix.so module must be configured in the system-auth file to use a FIPS 140-2 approved cryptographic hashing algorithm for system authentication.
+V-244525 CAT II RHEL 8 must be configured so that all network connections associated with SSH traffic are terminated after 10 minutes of becoming unresponsive.
+V-244526 CAT II The RHEL 8 SSH daemon must be configured to use system-wide crypto policies.
+V-244527 CAT III RHEL 8 must have the packages required to use the hardware random number generator entropy gatherer service.
+V-244528 CAT II The RHEL 8 SSH daemon must not allow GSSAPI authentication, except to fulfill documented and validated mission requirements.
+V-244529 CAT II RHEL 8 must use a separate file system for /var/tmp.
+V-244530 CAT II RHEL 8 must prevent files with the setuid and setgid bit set from being executed on the /boot/efi directory.
+V-244531 CAT II All RHEL 8 local interactive user home directory files must have mode 0750 or less permissive.
+V-244532 CAT II RHEL 8 must be configured so that all files and directories contained in local interactive user home directories are group-owned by a group of which the home directory owner is a member.
+V-244533 CAT II RHEL 8 must configure the use of the pam_faillock.so module in the /etc/pam.d/system-auth file.
+V-244534 CAT II RHEL 8 must configure the use of the pam_faillock.so module in the /etc/pam.d/password-auth file.
+V-244535 CAT II RHEL 8 must initiate a session lock for graphical user interfaces when the screensaver is activated.
+V-244536 CAT II RHEL 8 must disable the user list at logon for graphical user interfaces.
+V-244537 CAT II RHEL 8 must have the tmux package installed.
+V-244538 CAT II RHEL 8 must prevent a user from overriding the session idle-delay setting for the graphical user interface.
+V-244539 CAT II RHEL 8 must prevent a user from overriding the screensaver lock-enabled setting for the graphical user interface.
+V-244540 CAT I RHEL 8 must not allow blank or null passwords in the system-auth file.
+V-244541 CAT I RHEL 8 must not allow blank or null passwords in the password-auth file.
+V-244542 CAT II RHEL 8 audit records must contain information to establish what type of events occurred, the source of events, where events occurred, and the outcome of events.
+V-244543 CAT II RHEL 8 must notify the System Administrator (SA) and Information System Security Officer (ISSO) (at a minimum) when allocated audit record storage volume 75 percent utilization.
+V-244544 CAT II A firewall must be active on RHEL 8.
+V-244545 CAT II The RHEL 8 fapolicy module must be enabled.
+V-244546 CAT II The RHEL 8 fapolicy module must be configured to employ a deny-all, permit-by-exception policy to allow the execution of authorized software programs.
+V-244547 CAT II RHEL 8 must have the USBGuard installed.
+V-244548 CAT II RHEL 8 must enable the USBGuard.
+V-244549 CAT II All RHEL 8 networked systems must have SSH installed.
+V-244550 CAT II RHEL 8 must prevent IPv4 Internet Control Message Protocol (ICMP) redirect messages from being accepted.
+V-244551 CAT II RHEL 8 must not forward IPv4 source-routed packets.
+V-244552 CAT II RHEL 8 must not forward IPv4 source-routed packets by default.
+V-244553 CAT II RHEL 8 must ignore IPv4 Internet Control Message Protocol (ICMP) redirect messages.
+V-244554 CAT II RHEL 8 must enable hardening for the Berkeley Packet Filter Just-in-time compiler.
+V-245540 CAT II The RHEL 8 operating system must implement the Endpoint Security for Linux Threat Prevention tool.
+V-250315 CAT II RHEL 8 systems, versions 8.2 and above, must configure SELinux context type to allow the use of a non-default faillock tally directory.
+V-250316 CAT II RHEL 8 systems below version 8.2 must configure SELinux context type to allow the use of a non-default faillock tally directory.
+V-250317 CAT II RHEL 8 must not enable IPv4 packet forwarding unless the system is a router.
+V-251706 CAT I The RHEL 8 operating system must not have accounts configured with blank or null passwords.
+V-251707 CAT II RHEL 8 library directories must have mode 755 or less permissive.
+V-251708 CAT II RHEL 8 library directories must be owned by root.
+V-251709 CAT II RHEL 8 library directories must be group-owned by root or a system account.
+V-251710 CAT II The RHEL 8 operating system must use a file integrity tool to verify correct operation of all security functions.
+V-251711 CAT II RHEL 8 must specify the default "include" directory for the /etc/sudoers file.
+V-251712 CAT II The RHEL 8 operating system must not be configured to bypass password requirements for privilege escalation.
+V-251713 CAT II RHEL 8 must ensure the password complexity module is enabled in the system-auth file.
+V-251714 CAT II RHEL 8 systems below version 8.4 must ensure the password complexity module in the system-auth file is configured for three retries or less.
+V-251715 CAT II RHEL 8 systems below version 8.4 must ensure the password complexity module in the password-auth file is configured for three retries or less.
+V-251716 CAT II RHEL 8 systems, version 8.4 and above, must ensure the password complexity module is configured for three retries or less.
+V-251717 CAT II RHEL 8 must be configured in the system-auth file to prohibit password reuse for a minimum of five generations.
+V-251718 CAT II The graphical display manager must not be the default target on RHEL 8 unless approved.
+V-254520 CAT II RHEL 8 must prevent non-privileged users from executing privileged functions, including disabling, circumventing, or altering implemented security safeguards/countermeasures.
+V-255924 CAT II RHEL 8 SSH server must be configured to use only FIPS-validated key exchange algorithms.
+V-256973 CAT II RHEL 8 must ensure cryptographic verification of vendor software packages.
+V-256974 CAT II RHEL 8 must be configured to allow sending email notifications of unauthorized configuration changes to designated personnel.
+V-257258 CAT II RHEL 8 must terminate idle user sessions.
