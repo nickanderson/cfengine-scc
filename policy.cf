@@ -9,37 +9,40 @@ bundle agent scc_mock_report_data
 # @description This mock data was generated using parseXML.py from Chris Stephens and XCCDF xml produced by scc-5.8 on RHEL 8 in a test environment.
 {
   files:
-    "/tmp/scc-inventory-v0.dat"
-      template_method => "mustache",
-      edit_template => "$(this.promise_dirname)/scc-inventory-v0.dat.mustache";
+    scc_inventory_enabled::
+      "/tmp/scc-inventory-v0.dat"
+        template_method => "mustache",
+        edit_template => "$(this.promise_dirname)/scc-inventory-v0.dat.mustache";
 }
 
 bundle agent scc_inventory_report_v0
 {
   vars:
-    #"report_xccdf" string => "/home/vagrant/SCC/Sessions/2024-03-12_152554/Results/SCAP/XML/HUB_SCC-5.8_2024-03-12_152554_XCCDF-Results_RHEL_8_STIG-1.10.5.xml"
+    scc_inventory_enabled::
 
-    # Probably, it would be better if the script took arguments for the namespace and bundle in which to define variables
-    # and then it could output module protocol defining vars, easily slurped up by readmoduleprotocol()
-    "report_dat" string => "/tmp/scc-inventory-v0.dat";
+      #"report_xccdf" string => "/home/vagrant/SCC/Sessions/2024-03-12_152554/Results/SCAP/XML/HUB_SCC-5.8_2024-03-12_152554_XCCDF-Results_RHEL_8_STIG-1.10.5.xml"
 
-    # The Short Names are unique in a report, so we can parse with data_readstringarray having the result indexed by short name.
-    "d_report_dat"
-      data => data_readstringarray( "$(report_dat)",
-                                    "",
-                                    "\s+",
-                                    "inf",
-                                    "inf"),
-      if => fileexists( "$(report_dat)" );
+      # Probably, it would be better if the script took arguments for the namespace and bundle in which to define variables
+      # and then it could output module protocol defining vars, easily slurped up by readmoduleprotocol()
+      "report_dat" string => "/tmp/scc-inventory-v0.dat";
 
-    "i" slist => getindices( d_report_dat );
+      # The Short Names are unique in a report, so we can parse with data_readstringarray having the result indexed by short name.
+      "d_report_dat"
+        data => data_readstringarray( "$(report_dat)",
+                                      "",
+                                      "\s+",
+                                      "inf",
+                                      "inf"),
+        if => fileexists( "$(report_dat)" );
 
-    "results" slist => { "fail", "notapplicable", "notchecked", "pass" };
+      "i" slist => getindices( d_report_dat );
 
-    "$(results)[$(i)]"
-      string => "$(i)",
-      meta => { "inventory", "attribute_name=SCC 5.8 $(results)" },
-      if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
+      "results" slist => { "fail", "notapplicable", "notchecked", "pass" };
+
+      "$(results)[$(i)]"
+        string => "$(i)",
+        meta => { "inventory", "attribute_name=SCC 5.8 $(results)" },
+        if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 
 }
 

@@ -1,1 +1,20 @@
 This repository contains policy for mocking Compliance Reporting in CFEngine Enterprise for SCC, the DoD SCAP tool.
+
+To enable inventory define
+* Classes
+** default:scc_inventory_enabled
+
+Enables reporting of inventory data generated from scc scan reports.
+
+Note: This class needs to be reported. It's used by the scc compliance report for targeting which hosts checks should be considered against.
+
+#+begin_src json
+  {
+      "variables": {
+          "default:scc_inventory_enabled": {
+              "tags": [ "report" ]
+              "comment": "Enable scc inventory"
+          }
+      }
+  }
+#+end_src

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-filename="/root/cfbs/rules.txt"
+compliance_filename="SCC-compliance.json"
+filename="rules.txt"
 total_lines=$(wc -l < "$filename")
 counter=0
 
@@ -11,22 +12,22 @@ counter=0
             "id": "scc",
             "type": "compliance",
             "title": "SCC",
-            "conditions": [' > /tmp/compliance.json
+            "conditions": [' > "$compliance_filename"
   while IFS= read -r line; do
           ((counter++))
           if [ $counter -eq $total_lines ]; then
             ID=$(echo "$line" | awk '{print $1}')
-            printf '"%s"\n' "$ID" >> /tmp/compliance.json
+            printf '"%s"\n' "$ID" >> "$compliance_filename"
           else
             ID=$(echo "$line" | awk '{print $1}')
-            printf '"%s",\n' "$ID" >> /tmp/compliance.json
+            printf '"%s",\n' "$ID" >> "$compliance_filename"
          fi
   done < "$filename"
   echo '
             ]
         }
     },
-    "conditions": { ' >> /tmp/compliance.json
+    "conditions": { ' >> "$compliance_filename"
   counter=0
   while IFS= read -r line; do
           ((counter++))
@@ -43,7 +44,7 @@ counter=0
               "CAT III")
                 SEVERITY="high";;
             esac
-            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC 5.8 pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": null }\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> /tmp/compliance.json
+            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC 5.8 pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc_inventory_enabled" }\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
           else
             ID=$(echo "$line" | awk '{print $1}')
             DESCRIPTION=$(echo "$line" | cut -d ' ' -f4- | sed 's|/|\/|g')
@@ -57,10 +58,10 @@ counter=0
               "CAT III")
                 SEVERITY="high";;
             esac
-            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC 5.8 pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": null },\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> /tmp/compliance.json
+            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC 5.8 pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc_inventory_enabled" },\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
          fi
   done < "$filename"
-  printf '}\n}' >> /tmp/compliance.json
+  printf '}\n}' >> "$compliance_filename"
 
 #        "v-230520": {
 #            "id": "v-230520",
