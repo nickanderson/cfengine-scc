@@ -17,7 +17,6 @@
         "compliance-report-scc": {
             "description": "Compliance report with SCC checks",
             "dependencies": ["compliance-report-imports", "scc-inventory"],
-            "subdirectory": "./compliance-reports",
             "tags": ["experimental", "security", "compliance"],
             "repo": "https://github.com/nickanderson/cfengine-lynis",
             "by": "https://github.com/nickanderson/",
