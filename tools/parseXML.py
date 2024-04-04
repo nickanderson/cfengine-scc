@@ -58,7 +58,7 @@ def parse_file(xmlFile, parse_rule_descriptions=False, parse_findings=False):
         # Do something with the data (store it, print it, etc)
         #print ("---------------")
         #print (ET.tostring(result, encoding='unicode'))
-        if parse_findingss:
+        if parse_findings:
             print (short_name, status)
 
 if __name__== '__main__':
