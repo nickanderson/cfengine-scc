@@ -45,8 +45,28 @@ bundle agent scc_inventory_report_v0
         if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 
 }
-
 bundle agent __main__
 {
-  methods: "scc";
+      methods: "scc";
+}
+
+body file control
+{
+  namespace => "scc";
+}
+
+bundle agent packages
+{
+  packages:
+      "spawarscc"
+        policy => "present",
+        action => default:policy( "warn" ),
+        classes => default:results( "bundle", "package_spawarscc" );
+
+  reports:
+    package_spawarscc_notkept::
+      "$(with)"
+        with => concat( "spawarscc is not installed, please retreive and",
+                        " install the version appropriate for your platform from",
+                        " https://public.cyber.mil/stigs/scap/" );
 }
