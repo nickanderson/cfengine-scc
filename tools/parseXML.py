@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 import xml.etree.ElementTree as ET
+import sys
+
 def parse_file(xmlFile):
     tree = ET.parse(xmlFile)
     root = tree.getroot()
@@ -41,7 +43,10 @@ def parse_file(xmlFile):
         if level == 'low':
             level = 'CAT III'
         title = rule.find('xccdf:title', ns).text
-        print (short_name, level, title)
+        if parse_rule_descriptions:
+            print (short_name, level, title)
+
+
         # Do something with the data (store it, print it, etc)
         # Rule results
     rule_results = results.findall('xccdf:rule-result', ns)
@@ -53,12 +58,21 @@ def parse_file(xmlFile):
         # Do something with the data (store it, print it, etc)
         #print ("---------------")
         #print (ET.tostring(result, encoding='unicode'))
-        #print (short_name, status)
+        if parse_rule_descriptions:
+            print (short_name, status)
 
 if __name__== '__main__':
     if len(sys.argv) != 2:
-        print("Usage:", sys.argv[0], "/path/to/XCCDF-Results.xml")
+        print("Usage:", sys.argv[0], "/path/to/XCCDF-Results.xml [--parse-descriptions] [--parse-findings]")
+        sys.exit(1)
+
+    # Check for mutually exclusive options
+    if "--parse-descriptions" in sys.argv and "--parse-findings" in sys.argv:
+        print("Options --parse-descriptions and --parse-findings are mutually exclusive. Choose one.")
         sys.exit(1)
 
     xccdf_results_filename = sys.argv[1]
-    parse_file(xccdf_results_filename)
+    parse_rule_descriptions = "--parse-descriptions" in sys.argv
+    parse_findings = "--parse-findings" in sys.argv
+
+    parse_file(xccdf_results_filename, parse_rule_descriptions, parse_findings)
