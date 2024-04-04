@@ -74,3 +74,23 @@ bundle agent packages
       "spawarscc is installed";
 
 }
+
+bundle agent schedule
+{
+  vars:
+      "hours" slist => expandrange( "[1-23]", 1 );
+
+      "hour_selected"
+        string => hash_to_int( 1, 23, "CHANGEME" ),
+        meta =>  { "inventory", "attribute_name=SCC Scheduled Hour" };
+
+      "command" string => "echo /opt/scc/cscc";
+
+      "cron_entry" string => "0 $(hour_selected) * * * $(command) >/dev/null 2>&1";
+
+  files:
+      "/etc/cron.hourly/security-scan"
+        content => concat( "# CFEngine Managed$(const.n)",
+                           "$(cron_entry)" ),
+        perms => default:mog( "644", "root", "root" );
+}
