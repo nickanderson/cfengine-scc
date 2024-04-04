@@ -62,16 +62,17 @@ def parse_file(xmlFile, parse_rule_descriptions=False, parse_findings=False):
             print (short_name, status)
 
 if __name__== '__main__':
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print("Usage:", sys.argv[0], "/path/to/XCCDF-Results.xml [--parse-descriptions] [--parse-findings]")
         sys.exit(1)
+
+    xccdf_results_filename = sys.argv[1]
 
     # Check for mutually exclusive options
     if "--parse-descriptions" in sys.argv and "--parse-findings" in sys.argv:
         print("Options --parse-descriptions and --parse-findings are mutually exclusive. Choose one.")
         sys.exit(1)
 
-    xccdf_results_filename = sys.argv[1]
     parse_rule_descriptions = "--parse-descriptions" in sys.argv
     parse_findings = "--parse-findings" in sys.argv
 
