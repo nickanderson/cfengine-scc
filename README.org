@@ -1,6 +1,5 @@
 This repository contains policy for mocking Compliance Reporting in CFEngine Enterprise for SCC, the DoD SCAP tool.
 
-To enable inventory define
 * Classes
 ** default:scc_inventory_enabled
 

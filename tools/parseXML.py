@@ -56,4 +56,9 @@ def parse_file(xmlFile):
         #print (short_name, status)
 
 if __name__== '__main__':
-    parse_file('/home/vagrant/SCC/Sessions/2024-03-12_152554/Results/SCAP/XML/HUB_SCC-5.8_2024-03-12_152554_XCCDF-Results_RHEL_8_STIG-1.10.5.xml')
+    if len(sys.argv) != 2:
+        print("Usage:", sys.argv[0], "/path/to/XCCDF-Results.xml")
+        sys.exit(1)
+
+    xccdf_results_filename = sys.argv[1]
+    parse_file(xccdf_results_filename)
