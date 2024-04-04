@@ -5,3 +5,9 @@ Tools used to prepare mock data.
 - rules.txt :: Simple data file used by =mk-compliance.sh=
 - mk-compliance.sh :: Generates a compliance report definition that can be imported in Mission Portal.
 - SCC-compliance.json :: A generated compliance report definition
+* Generating a new SCC compliance report based on SCC xccdf scan results
+#+caption: Shell command with stderr
+#+begin_src sh :results output :exports both
+  parseXML.py /path/to/XCCDF-Results.xml --parse-descriptions > rules.txt
+  mk-compliance.sh
+#+end_src

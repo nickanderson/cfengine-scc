@@ -6,6 +6,7 @@ total_lines=$(wc -l < "$filename")
 counter=0
 
 
+
   echo '{
     "reports": {
         "scc": {
