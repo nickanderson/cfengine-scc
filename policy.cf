@@ -52,10 +52,19 @@ bundle agent schedule
 
   files:
       "$(output_dir)/." create => "true";
-      "/etc/cron.hourly/security-scan"
+      "/etc/cron.d/security-scan"
         content => concat( "# CFEngine Managed$(const.n)",
                            "$(cron_entry)" ),
-        perms => default:mog( "644", "root", "root" );
+        perms => default:mog( "644", "root", "root" ); # Wth, mode 0700!?
+
+      # [root@hub scc]# cf-agent -KI
+      # info: Created directory '/tmp/SCC-RESULT/.', mode 0700
+      # info: Updated file '/etc/cron.hourly/security-scan' with content '# CFEngine Managed
+      # 0 15 * * * /opt/scc/cscc --userDir /tmp/SCC-RESULT >/dev/null 2>&1'
+      # R: Newest: $(newest_file)
+      # error: A method attempted to use a bundle 'inventory_read' that was apparently not defined
+      # error: Fatal CFEngine error: Aborting due to missing bundle 'inventory_read'
+
 }
 
 bundle agent inventory
