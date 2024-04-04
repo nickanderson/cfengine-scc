@@ -71,7 +71,7 @@ bundle agent inventory
 {
   methods:
       "inventory_parse";
-      "inventory_read";
+      "inventory_report";
 }
 bundle agent inventory_parse
 {
