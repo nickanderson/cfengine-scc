@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import sys
 
-def parse_file(xmlFile):
+def parse_file(xmlFile, parse_rule_descriptions=False, parse_findings=False):
     tree = ET.parse(xmlFile)
     root = tree.getroot()
     # This is a short cut to avoid having to type it over and over again.
