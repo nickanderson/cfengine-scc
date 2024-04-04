@@ -69,4 +69,8 @@ bundle agent packages
         with => concat( "spawarscc is not installed, please retreive and",
                         " install the version appropriate for your platform from",
                         " https://public.cyber.mil/stigs/scap/" );
+
+    package_spawarscc_kept.(scc:DEBUG_packages)::
+      "spawarscc is installed";
+
 }
