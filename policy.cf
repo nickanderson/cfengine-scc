@@ -82,15 +82,41 @@ bundle agent schedule
 
       "hour_selected"
         string => hash_to_int( 1, 23, "CHANGEME" ),
-        meta =>  { "inventory", "attribute_name=SCC Scheduled Hour" };
+        meta =>  { "inventory", "attribute_name=SCC Scheduled Hour" },
+        if => not( isvariable( "scc:schedule.hour_selected" ) );
 
-      "command" string => "echo /opt/scc/cscc";
+      "output_dir" string => "/tmp/SCC-RESULT";
+      "command" string => "/opt/scc/cscc --userDir $(output_dir)";
 
       "cron_entry" string => "0 $(hour_selected) * * * $(command) >/dev/null 2>&1";
 
   files:
+      "$(output_dir)/." create => "true";
       "/etc/cron.hourly/security-scan"
         content => concat( "# CFEngine Managed$(const.n)",
                            "$(cron_entry)" ),
         perms => default:mog( "644", "root", "root" );
+}
+
+bundle agent inventory_parse
+{
+  vars:
+      "xccdf_files" slist => findfiles( "$(scc:schedule.output_dir)/**/*XCCDF-Results*.xml" );
+      "xccdf_file_mtime[$(xccdf_files)]"
+        string => filestat( $(xccdf_files), "mtime" );
+
+      "statefile" string => "$(sys.statedir)/scc-scan-result-inventory.txt";
+
+      # The file with the largest mtime is the newest
+      "newest_time" string => max( getvalues( "xccdf_file_mtime" ), int );
+      "newest_file" string => "$(xccdf_files)", if => strcmp( "$(xccdf_file_mtime[$(xccdf_files)])", "$(newest_time)" );
+
+  commands:
+      "/var/cfengine/bin/cfengine-selected-python $(this.promise_dirname)/tools/parseXML.py > $(statefile)"
+        if => or( isnewerthan( "$(newest_file)", "$(statefile)" ),
+                  not( fileexists( "$(statefile)" )) );
+
+  reports:
+      "$(xccdf_files)";
+      "Newest: $(newest_file)";
 }
