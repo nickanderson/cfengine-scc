@@ -42,13 +42,22 @@ bundle agent schedule
 
       "hour_selected"
         string => hash_to_int( 1, 23, "CHANGEME" ),
-        meta =>  { "inventory", "attribute_name=SCC Scheduled Hour" },
         if => not( isvariable( "scc:schedule.hour_selected" ) );
+
+      "minute_selected"
+        string => hash_to_int( 1, 59, "CHANGEME" ),
+        if => not( isvariable( "scc:schedule.minute_selected" ) );
+
+      "time_selected"
+        string => concat( format( "%02d", "$(hour_selected)" ),
+                          ":",
+                          format( "%02d", "$(minute_selected)" ) ),
+        meta =>  { "inventory", "attribute_name=SCC Scheduled Scan Time" };
 
       "output_dir" string => "/tmp/SCC-RESULT";
       "command" string => "/opt/scc/cscc --userDir $(output_dir)";
 
-      "cron_entry" string => "0 $(hour_selected) * * * root $(command) >/dev/null 2>&1";
+      "cron_entry" string => "$(minute_selected) $(hour_selected) * * * root $(command) >/dev/null 2>&1";
 
   files:
       "$(output_dir)/." create => "true";

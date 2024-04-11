@@ -16,8 +16,23 @@ Defines the hour during which the scan should be run. This sets the hour in the 
       }
   }
 #+end_src
+** scc:schedule.minute_selected
+
+Defines the minute during which the scan should be run. This sets the minute in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will select an minute automatically in a way that tries to provide a relatively even distribution across hosts.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.minute_selected": {
+              "value": "50",
+              "comment": "Target scc scan for 50th minute of the hour instead of automatic selection."
+          }
+      }
+  }
+#+end_src
 
 * Classes
+
 ** default:scc_inventory_enabled
 
 Enables reporting of inventory data generated from scc scan reports.
@@ -34,3 +49,9 @@ Note: This class needs to be reported. It's used by the scc compliance report fo
       }
   }
 #+end_src
+
+* Inventory
+
+** SCC Scheduled Scan Time
+
+The local time in 24 hour format that the scc scan is schedule for.
