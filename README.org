@@ -55,3 +55,19 @@ Note: This class needs to be reported. It's used by the scc compliance report fo
 ** SCC Scheduled Scan Time
 
 The local time in 24 hour format that the scc scan is schedule for.
+
+** SCC pass
+
+Rules that where checked and passed.
+
+** SCC notapplicable
+
+Rules that were not applicable.
+
+** SCC notchecked
+
+Rules that were not checked.
+
+** SCC fail
+
+Rules that were checked and failed.
