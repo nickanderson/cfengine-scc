@@ -88,9 +88,11 @@ bundle agent inventory_parse
 
   commands:
       "/var/cfengine/bin/cfengine-selected-python $(this.promise_dirname)/tools/parseXML.py $(newest_file) --parse-findings > $(statefile)"
-        # if => or( isnewerthan( "$(newest_file)", "$(statefile)" ),
-        #           not( fileexists( "$(statefile)" )) ),
+        if => and(
+                   isvariable( newest_file ) ),
         contain => default:in_shell;
+                   #or( isnewerthan( "$(newest_file)", "$(statefile)" ),
+        #           not( fileexists( "$(statefile)" )) ),
 
   reports:
       "$(xccdf_files)";
