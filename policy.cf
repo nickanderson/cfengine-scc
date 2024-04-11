@@ -119,6 +119,6 @@ bundle agent inventory_report
 
       "$(results)[$(i)]"
         string => "$(i)",
-        meta => { "inventory", "attribute_name=SCC 5.8 $(results)" },
+        meta => { "inventory", "attribute_name=SCC $(results)" },
         if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 }
