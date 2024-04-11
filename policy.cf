@@ -24,7 +24,7 @@ bundle agent packages
         classes => default:results( "bundle", "package_spawarscc" );
 
   reports:
-    package_spawarscc_notkept::
+    package_spawarscc_not_kept::
       "$(with)"
         with => concat( "spawarscc is not installed, please retreive and",
                         " install the version appropriate for your platform from",
