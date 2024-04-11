@@ -57,7 +57,7 @@ bundle agent schedule
       "output_dir" string => "/tmp/SCC-RESULT";
       "command" string => "/opt/scc/cscc --userDir $(output_dir)";
 
-      "cron_entry" string => "$(minute_selected) $(hour_selected) * * * root $(command) >/dev/null 2>&1";
+      "cron_entry" string => "$(minute_selected) $(hour_selected) * * * root $(command) >/dev/null 2>&1$(const.n)";
 
   files:
       "$(output_dir)/." create => "true";
