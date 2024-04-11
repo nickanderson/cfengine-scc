@@ -1,5 +1,22 @@
 This repository contains policy for mocking Compliance Reporting in CFEngine Enterprise for SCC, the DoD SCAP tool.
 
+* Variables
+
+** scc:schedule.hour_selected
+
+Defines the hour during which the scan should be run. This sets the hour in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will select an hour automatically in a way that tries to provide a relatively even distribution across hosts.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.hour_selected": {
+              "value": "17",
+              "comment": "Target scc scan for 5:00pm hour instead of automatic selection."
+          }
+      }
+  }
+#+end_src
+
 * Classes
 ** default:scc_inventory_enabled
 
