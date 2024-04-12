@@ -156,4 +156,10 @@ bundle agent inventory_report
         string => "$(i)",
         meta => { "inventory", "attribute_name=SCC $(results)" },
         if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
+
+      "url_$(results)[$(i)]"
+        string => "https://ato-pathways.com/search?q=$(i)&ifl=true",
+        meta => { "inventory", "attribute_name=SCC $(results) URLs" },
+        if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
+
 }
