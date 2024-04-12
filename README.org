@@ -71,3 +71,15 @@ Rules that were not checked.
 ** SCC fail
 
 Rules that were checked and failed.
+
+** SCC Ruleset
+
+Ruleset used during scc scan, extracted from result filename.
+
+** SCC Report Date
+
+The date of the most recent scc scan result, extract from result filename.
+
+** SCC Report Version
+
+The version of the scc tool used during the most recent scan, extracted from result filename.

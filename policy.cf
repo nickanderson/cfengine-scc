@@ -95,6 +95,32 @@ bundle agent inventory_parse
       "newest_time" string => max( getvalues( "xccdf_file_mtime" ), int );
       "newest_file" string => "$(xccdf_files)", if => strcmp( "$(xccdf_file_mtime[$(xccdf_files)])", "$(newest_time)" );
 
+      "filename_extract"
+        data => data_regextract( ".*SCC-(?<scc_version>\d+\.\d+)_(?<scan_YYYY>\d+)-(?<scan_MM>\d+)-(?<scan_DD>\d+)_(?<scan_hh>\d\d)(?<scan_mm>\d\d)(?<scan_ss>\d\d)_XCCDF-Results_(?<scan_ruleset>.*)\.xml",
+                                 basename( "$(newest_file)" ) );
+      # {
+      #   "0": "HUB_SCC-5.9_2024-04-11_172103_XCCDF-Results_RHEL_8_STIG-1.12.8.xml",
+      #   "scan_DD": "11",
+      #   "scan_MM": "04",
+      #   "scan_YYYY": "2024",
+      #   "scan_hh": "17",
+      #   "scan_mm": "21",
+      #   "scan_ruleset": "RHEL_8_STIG-1.12.8",
+      #   "scan_ss": "03",
+      #   "scc_version": "5.9"
+      # }
+      "inventory_ruleset"
+        string => "$(filename_extract[scan_ruleset])",
+        meta => { "inventory", "attribute_name=SCC Ruleset" };
+
+      "inventory_report_date"
+        string => "$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])",
+        meta => { "inventory", "attribute_name=SCC Report Date" };
+
+      "inventory_report_scc_version"
+        string => "$(filename_extract[scc_version])",
+        meta => { "inventory", "attribute_name=SCC Report Version" };
+
   commands:
       "/var/cfengine/bin/cfengine-selected-python $(this.promise_dirname)/tools/parseXML.py $(newest_file) --parse-findings > $(statefile)"
         if => and(
