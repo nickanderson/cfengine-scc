@@ -38,7 +38,7 @@ bundle agent packages
 bundle agent schedule
 {
   vars:
-      "seed" string => "CHANGEME";
+      "seed" string => "$(sys.fqhost)$(sys.key_digest)";
 
       "hours" slist => expandrange( "[1-23]", 1 );
 
