@@ -2,9 +2,13 @@ This repository contains policy for mocking Compliance Reporting in CFEngine Ent
 
 * Variables
 
-** scc:schedule.hour_selected
+** Scheduling scans
 
-Defines the hour during which the scan should be run. This sets the hour in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will select an hour automatically in a way that tries to provide a relatively even distribution across hosts.
+Variables are exposed for configuring scan execution initiated via cron. By default scans will be scheduled for once a month.
+
+*** scc:schedule.hour_selected
+
+Defines the hour during which the scan should be run. This sets the hour in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will make a stable selection (from 1 to 23) automatically in a way that tries to provide a relatively even distribution across hosts.
 
 #+begin_src json
   {
@@ -16,9 +20,10 @@ Defines the hour during which the scan should be run. This sets the hour in the 
       }
   }
 #+end_src
-** scc:schedule.minute_selected
 
-Defines the minute during which the scan should be run. This sets the minute in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will select an minute automatically in a way that tries to provide a relatively even distribution across hosts.
+*** scc:schedule.minute_selected
+
+Defines the minute during which the scan should be run. This sets the minute in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will make a stable selection (from 1 to 59) automatically in a way that tries to provide a relatively even distribution across hosts.
 
 #+begin_src json
   {
@@ -31,13 +36,43 @@ Defines the minute during which the scan should be run. This sets the minute in 
   }
 #+end_src
 
+*** scc:schedule.weekday_selected
+
+Defines the day of the week in which the scan should be run. This sets the day of the week in the cron job used to schedule scan execution and report generation. If this is not explicitly defined the host will make a stable selection (from 0 to 6) automatically in a way that tries to provide a relatively even distribution across hosts.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.weekday_selected": {
+              "value": "6",
+              "comment": "Target scc scan for Saturday."
+          }
+      }
+  }
+#+end_src
+
+*** scc:schedule.monthday_selected
+
+Defines the day of the month in which the scan should be run. This sets the day of the month in the cron job used to schedule scan execution and report generation. If this is not explicitly defined the host will make a stable selection (from 1 to 28) automatically in a way that tries to provide a relatively even distribution across hosts.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.monthday_selected": {
+              "value": "1",
+              "comment": "Target scc scan for the first of the month."
+          }
+      }
+  }
+#+end_src
+
 * Classes
 
 ** default:scc_inventory_enabled
 
 Enables reporting of inventory data generated from scc scan reports.
 
-Note: This class needs to be reported. It's used by the scc compliance report for targeting which hosts checks should be considered against.
+*Note:* *This class needs to be reported.* It's used by the scc compliance report for targeting which hosts checks should be considered against. If this class is not reported the compliance report will not consider the host in it's checks.
 
 #+begin_src json
   {
@@ -57,6 +92,8 @@ Note: This class needs to be reported. It's used by the scc compliance report fo
 ** SCC Scheduled Scan Time
 
 The local time in 24 hour format that the scc scan is schedule for.
+
+Note: This is derived automatically if not defined by =scc:schedule.minute_selected=, or =scc:schedule.hour_selected=.
 
 ** SCC % pass of checked
 
