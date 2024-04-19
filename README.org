@@ -56,6 +56,10 @@ Note: This class needs to be reported. It's used by the scc compliance report fo
 
 The local time in 24 hour format that the scc scan is schedule for.
 
+** SCC % pass of checked
+
+The percentage of checks performed that passed. Note, this excludes results that were =notapplicable= or =notchecked=.
+
 ** SCC pass
 
 Rules that where checked and passed.

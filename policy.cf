@@ -157,9 +157,18 @@ bundle agent inventory_report
         meta => { "inventory", "attribute_name=SCC $(results)" },
         if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 
-      "url_$(results)[$(i)]"
-        string => "https://ato-pathways.com/search?q=$(i)&ifl=true",
-        meta => { "inventory", "attribute_name=SCC $(results) URLs" },
-        if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
+      "count_results_$(results)"
+        int => length( getindices( "$(results)" ) );
+
+      "pass_fail_pct"
+        string => format( "%0.2f", eval( "$(count_results_pass)/($(count_results_pass)+$(count_results_fail))*100", "math", "infix")),
+        meta => { "inventory", "attribute_name=SCC % pass of checked" },
+        comment => "This helps us easily identify the percentage of passing checks from those evaluated";
+
+      # Stubbed out, this is really handy information, but it's fugly
+      # "url_$(results)[$(i)]"
+      #   string => "https://ato-pathways.com/search?q=$(i)&ifl=true",
+      #   meta => { "inventory", "attribute_name=SCC $(results) URLs" },
+      #   if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 
 }
