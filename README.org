@@ -52,6 +52,8 @@ Note: This class needs to be reported. It's used by the scc compliance report fo
 
 * Inventory
 
+[[https://raw.github.com/nickanderson/cfengine-scc/main/media/inventory-version-pctpass-report-date-ruleset.png]]
+
 ** SCC Scheduled Scan Time
 
 The local time in 24 hour format that the scc scan is schedule for.
