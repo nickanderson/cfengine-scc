@@ -50,6 +50,9 @@ bundle agent schedule
         string => hash_to_int( 1, 59, "$(seed)" ),
         if => not( isvariable( "scc:schedule.minute_selected" ) );
 
+      "weekday_map"
+        data => '{ "0": "Sunday", "1": "Monday", "3": "Tuesday", "4": "Wednesday", "5": "Thursday", "6": "Saturday" }';
+
       "weekday_selected"
         string => hash_to_int( 0, 6, "$(seed)" ),
         if => not( isvariable( "scc:schedule.weekday_selected" ) );
@@ -59,7 +62,9 @@ bundle agent schedule
         if => not( isvariable( "scc:schedule.monthday_selected" ) );
 
       "time_selected"
-        string => concat( format( "%02d", "$(hour_selected)" ),
+        string => concat(
+                          "$(weekday_map[$(weekday_selected)]) ",
+                          format( "%02d", "$(hour_selected)" ),
                           ":",
                           format( "%02d", "$(minute_selected)" ) ),
         meta =>  { "inventory", "attribute_name=SCC Scheduled Scan Time" };
