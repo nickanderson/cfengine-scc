@@ -54,9 +54,8 @@ bundle agent schedule
         string => hash_to_int( 0, 6, "$(seed)" ),
         if => not( isvariable( "scc:schedule.weekday_selected" ) );
 
-      # Every month has as least 28 days, so we auto-select within that range
       "monthday_selected"
-        string => hash_to_int( 1, 28, "$(seed)" ),
+        string => "*",
         if => not( isvariable( "scc:schedule.monthday_selected" ) );
 
       "time_selected"
@@ -68,7 +67,9 @@ bundle agent schedule
       "output_dir" string => "/tmp/SCC-RESULT";
       "command" string => "/opt/scc/cscc --userDir $(output_dir)";
 
-      "cron_entry" string => "$(minute_selected) $(hour_selected) $(monthday_selected) * $(weekday_selected) root $(command) >/dev/null 2>&1$(const.n)";
+      "cron_entry"
+        string => "$(minute_selected) $(hour_selected) $(monthday_selected) * $(weekday_selected) root $(command) >/dev/null 2>&1$(const.n)",
+        meta => { "report" };
 
   files:
       "$(output_dir)/." create => "true";

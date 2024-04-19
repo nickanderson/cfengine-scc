@@ -4,7 +4,9 @@ This repository contains policy for mocking Compliance Reporting in CFEngine Ent
 
 ** Scheduling scans
 
-Variables are exposed for configuring scan execution initiated via cron. By default scans will be scheduled for once a month.
+Variables are exposed for configuring scan execution initiated via cron. By default scans will be scheduled for once a week.
+
+*Note:* Each of these variables is used in the cron configuration so be mindful of how cron scheduling works.
 
 *** scc:schedule.hour_selected
 
@@ -53,7 +55,7 @@ Defines the day of the week in which the scan should be run. This sets the day o
 
 *** scc:schedule.monthday_selected
 
-Defines the day of the month in which the scan should be run. This sets the day of the month in the cron job used to schedule scan execution and report generation. If this is not explicitly defined the host will make a stable selection (from 1 to 28) automatically in a way that tries to provide a relatively even distribution across hosts.
+Defines the day of the month in which the scan should be run. This sets the day of the month in the cron job used to schedule scan execution and report generation. If this is not explicitly defined the default value (=*=) is used.
 
 #+begin_src json
   {
