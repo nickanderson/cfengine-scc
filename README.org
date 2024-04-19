@@ -1,7 +1,6 @@
 This repository contains policy for mocking Compliance Reporting in CFEngine Enterprise for SCC, the DoD SCAP tool.
 
 * Variables
-
 ** Scheduling scans
 
 Variables are exposed for configuring scan execution initiated via cron. By default scans will be scheduled for once a week.
@@ -128,3 +127,8 @@ The date of the most recent scc scan result, extract from result filename.
 ** SCC Report Version
 
 The version of the scc tool used during the most recent scan, extracted from result filename.
+
+* Compliance Report
+The compliance report is provided as a separate module (=compliance-report-scc=).
+
+[[https://raw.github.com/nickanderson/cfengine-scc/main/media/compliance-example.png]]
