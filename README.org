@@ -7,9 +7,43 @@ Variables are exposed for configuring scan execution initiated via cron. By defa
 
 *Note:* Each of these variables is used in the cron configuration so be mindful of how cron scheduling works.
 
+*** scc:schedule.hour_start
+
+Defines the minimum hour during which automatic scheduling can occur. This is not defined by default.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.hour_start": {
+              "value": "17",
+              "comment": "Don't auto schedule scans until 17:00"
+          }
+      }
+  }
+#+end_src
+
+Note: This value is uses as the minimum start time
+
+*** scc:schedule.window_length
+
+Defines the number of hours from hour_start during which automatic scheduling can occur. This is not defined by default.
+
+#+begin_src json
+  {
+      "variables": {
+          "scc:schedule.window_length": {
+              "value": "12",
+              "comment": "From the start hour allow scan to be scheduled during the next N (12) hours. E.g. If hour start is 17 (5pm), pick an hour between 17:00 and 05:00."
+          }
+      }
+  }
+#+end_src
+
 *** scc:schedule.hour_selected
 
-Defines the hour during which the scan should be run. This sets the hour in the cron job used to schedule scan execution and report generation. If this is not explicitly defined, the host will make a stable selection (from 1 to 23) automatically in a way that tries to provide a relatively even distribution across hosts.
+Defines the hour during which the scan should be run. This sets the hour in the cron job used to schedule scan execution and report generation.
+
+If this is not explicitly defined and no start hour and window_length are defined the host will make a stable selection (from 1 to 23) automatically in a way that tries to provide a relatively even distribution across hosts. If window length_and hour_start are defined, it will select a stable hour in that period.
 
 #+begin_src json
   {
@@ -66,7 +100,6 @@ Defines the day of the month in which the scan should be run. This sets the day 
       }
   }
 #+end_src
-
 * Classes
 
 ** default:scc_inventory_enabled
@@ -132,3 +165,25 @@ The version of the scc tool used during the most recent scan, extracted from res
 The compliance report is provided as a separate module (=compliance-report-scc=).
 
 [[https://raw.github.com/nickanderson/cfengine-scc/main/media/compliance-example.png]]
+
+* TODOs :noexport:
+
+** DONE Expose time ranges for automatic distribution of execution as tunables
+CLOSED: [2024-05-01 Wed 17:00]
+So that we can target non-working hours for example.
+
+Exposed hour_start and window_length which can be used to define a range of time in which the scan can be scheduled.
+
+** Add documentation for inventorying results of "manual checks"
+
+E.g. for Red Hat 8, there are MANY checks that are manual and not automated by the SCC tool, even though the tooling provides copy and paste checks (and fixes) for many of these.
+
+** Add inventory for pass% total (of pass fail + manual check pass)
+This way we know our overall pass% per host including manual checks but also what we know will pass from the SCC tool itself.
+
+** Consider how to provide more rich information about the checks
+- The compliance report details field for each condition could contain the check and fix text as well
+  - It's not pretty, it's just a simple string, so it would be hard to read without changes to Mission Portal
+- With a Mission Portal change we could turn the ijnventoried finding ids into links
+  - Would not work well if the link target were on the internet (many of these environments are air gapped)
+  - Could plausibly make the link target the related condition in Mission Portal (still have a small issue with lack of beauty in details field)

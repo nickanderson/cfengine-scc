@@ -40,21 +40,50 @@ bundle agent schedule
   vars:
       "seed" string => "$(sys.fqhost)$(sys.key_digest)";
 
-      "hours" slist => expandrange( "[1-23]", 1 );
+      # "hour_start" The first hour under which you would like scans to
+      # automatically run. expected to be defined via Augments, no default value
 
+      # "window_length" The number of hours beginning from hour_start during
+      # which you would like scans to automatically run. expected to be defined
+      # via Augments, no default value
+
+      # This won't be defined if window_length is not defined because of skipped
+      # promises that contain unresolved variables.
+      "hour_offset"
+        int => hash_to_int( "0", "$(window_length)", "$(seed)" );
+
+      # If the selected hour is not specified and neither a starting time and
+      # windows length are defined just pick an hour any time during the day.
       "hour_selected"
-        string => hash_to_int( 1, 23, "$(seed)" ),
-        if => not( isvariable( "scc:schedule.hour_selected" ) );
+        int => hash_to_int( 1, 24, "$(seed)" ),
+        if => and( not( isvariable( "scc:schedule.hour_selected" ) ),
+                   not( isvariable( "scc:schedule.hour_start") ),
+                   not( isvariable( "scc:schedule.window_length" ) ) );
+
+      # If hour_selected has yet to be defined
+      "hour_selected"
+        string => format( "%02d", eval( "($(hour_start)+$(hour_offset))%24", math, infix) ),
+        if => and( not( isvariable( "scc:schedule.hour_selected" ) ),
+                   and(
+                        isvariable( "scc:schedule.hour_start" ),
+                        isvariable( "scc:schedule.window_length") ) );
 
       "minute_selected"
-        string => hash_to_int( 1, 59, "$(seed)" ),
+        int => hash_to_int( 1, 59, "$(seed)" ),
         if => not( isvariable( "scc:schedule.minute_selected" ) );
 
       "weekday_map"
-        data => '{ "0": "Sunday", "1": "Monday", "3": "Tuesday", "4": "Wednesday", "5": "Thursday", "6": "Saturday" }';
+        data => '{
+  "0": "Sunday",
+  "1": "Monday",
+  "3": "Tuesday",
+  "4": "Wednesday",
+  "5": "Thursday",
+  "6": "Saturday"
+}';
 
       "weekday_selected"
-        string => hash_to_int( 0, 6, "$(seed)" ),
+        int => hash_to_int( 0, 6, "$(seed)" ),
         if => not( isvariable( "scc:schedule.weekday_selected" ) );
 
       "monthday_selected"
