@@ -150,7 +150,7 @@ bundle agent schedule
                    # Only if we don't have existing parsed inventory (un-necessary ?)
                    # not( fileexists( "$(scc:inventory_parse.statefile)") ),
                    # Only if the directory is empty (finding . and ..)
-                   not( strcmp( length( lsdir( "$(output_dir)", "", false )), "2"))
+                   not( isgreaterthan( length( lsdir( "$(output_dir)", "", false )), "2"))
                    ),
         comment => concat( "In order to get information back quickly, we use",
                            " systemd-run to schedule a one time job to avoid",
