@@ -127,6 +127,10 @@ Example defining the class explicitly via Augments (=def.json=).
 
 When defined compliance checks from the related =compliance-report-scc= module will not be done unless the class =scc:compliance_checks_enabled= is /explicitly/ defined elsewhere.
 
+** scc:initial_scan_disabled
+
+If this class is not defined (not defined by default) an initial scan is executed. This facilitates getting scan report data back quickly when the module is first deployed. If deploying to a large infrastructure you may want to define this class so that all hosts do not kick off a scan in short order and are instead waiting for their regularly scheduled scan.
+
 * Inventory
 
 [[https://raw.github.com/nickanderson/cfengine-scc/main/media/inventory-version-pctpass-report-date-ruleset.png]]
