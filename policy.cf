@@ -107,7 +107,8 @@ bundle agent schedule
         meta => { "report" };
 
   files:
-      "$(output_dir)/." create => "true";
+     # Is this really necessary to initialize the output target?
+     # "$(output_dir)/." create => "true";
       "/etc/cron.d/security-scan"
         content => concat( "# CFEngine Managed$(const.n)",
                            "$(cron_entry)" ),
@@ -121,6 +122,22 @@ bundle agent schedule
       # error: A method attempted to use a bundle 'inventory_read' that was apparently not defined
       # error: Fatal CFEngine error: Aborting due to missing bundle 'inventory_read'
 
+  commands:
+      # Scheduling an initial scan
+      # To improve the out of the box experience and in order to avoid causing a
+      # long agent run we use systemd-run to schedule a scan in the future.
+
+    !scc:initial_scan_disabled::
+      "systemd-run"
+        arglist => {
+                     "--on-active=1",
+                     "$(command)"
+        },
+        if => not( isdir( "$(output_dir)" ) ),
+        comment => concat( "In order to get information back quickly, we use",
+                           " systemd-run to schedule a one time job to avoid",
+                           " creating a long agent run." ),
+        contain => default:in_shell;
 }
 
 bundle agent inventory
