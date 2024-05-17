@@ -125,9 +125,12 @@ bundle agent schedule
       # error: Fatal CFEngine error: Aborting due to missing bundle 'inventory_read'
 
   commands:
+
       # Scheduling an initial scan
       # To improve the out of the box experience and in order to avoid causing a
       # long agent run we use systemd-run to schedule a scan in the future.
+      # This is done if the output dir seems to have been created since the host
+      # booted AND if there is no inventory statefile yet generated.
 
     !scc:initial_scan_disabled::
       "systemd-run"
@@ -135,7 +138,9 @@ bundle agent schedule
                      "--on-active=1",
                      "$(command)"
         },
-        if => not( isdir( "$(output_dir)" ) ),
+        if => and( isnewerthan( "$(output_dir)", "/proc/1" ),
+                   not( fileexists( "$(scc:inventory_parse.statefile)") )
+                   ),
         comment => concat( "In order to get information back quickly, we use",
                            " systemd-run to schedule a one time job to avoid",
                            " creating a long agent run." ),
