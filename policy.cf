@@ -237,8 +237,7 @@ bundle agent inventory_report
                   "(ubuntu_22).x86_64",
           },
         meta => { "report" },
+        scope => "namespace",
         comment => concat ("If this class is not reported compliance report",
                            " checks in Mission Portal will not be done." );
-
-
 }
