@@ -76,9 +76,10 @@ bundle agent schedule
         data => '{
   "0": "Sunday",
   "1": "Monday",
-  "3": "Tuesday",
-  "4": "Wednesday",
-  "5": "Thursday",
+  "2": "Tuesday",
+  "3": "Wednesday",
+  "4": "Thursday",
+  "5": "Friday",
   "6": "Saturday"
 }';
 
