@@ -132,7 +132,7 @@ bundle agent schedule
       # This is done if the output dir seems to have been created since the host
       # booted AND if there is no inventory statefile yet generated.
 
-    !scc:initial_scan_disabled::
+    !scc:initial_scan_disabled.default:systemd::
       "systemd-run"
         arglist => {
                      "--on-active=1",
