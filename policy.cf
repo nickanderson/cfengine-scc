@@ -18,6 +18,12 @@ body file control
 bundle agent packages
 {
   packages:
+      # TODO Redact this, for testing
+      # Install the package if it's found in an expected location
+      "spawarscc"
+        policy => "present",
+        if => fileexists( "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm" );
+
       "spawarscc"
         policy => "present",
         action => default:policy( "warn" ),
