@@ -45,7 +45,7 @@ counter=0
               "CAT III")
                 SEVERITY="high";;
             esac
-            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc_inventory_enabled" }\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
+            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc:compliance_checks_enabled" }\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
           else
             ID=$(echo "$line" | awk '{print $1}')
             DESCRIPTION=$(echo "$line" | cut -d ' ' -f4- | sed 's|/|\/|g')
@@ -59,7 +59,7 @@ counter=0
               "CAT III")
                 SEVERITY="high";;
             esac
-            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc_inventory_enabled" },\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
+            printf '"%s": { "id": "%s", "name": "%s", "description": "%s", "type": "inventory", "condition_for": "passing", "rules": [ { "attribute": "SCC pass", "operator": "matches", "value": "%s" } ], "category": "%s", "severity": "%s", "host_filter": "scc:compliance_checks_enabled" },\n' $ID $ID $ID "$DESCRIPTION" $ID "$CATEGORY" $SEVERITY >> "$compliance_filename"
          fi
   done < "$filename"
   printf '}\n}' >> "$compliance_filename"

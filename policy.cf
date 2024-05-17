@@ -217,4 +217,28 @@ bundle agent inventory_report
       #   meta => { "inventory", "attribute_name=SCC $(results) URLs" },
       #   if => strcmp( "$(results)", "$(d_report_dat[$(i)])" );
 
+  classes:
+
+      # scc:compliance_checks_enabled must be /reported/ to the hub in order for
+      # the related compliance module report to target checks. We define and
+      # report that by default for plausibly supported platforms unless it's
+      # explicitly disabled.
+
+      !scc:compliance_checks_disabled::
+        "compliance_checks_enabled"
+          or => {
+                  # each line maps to a single zip artifact used for all platforms on that line
+                  "redhat_pure.redhat_7.x86_64", "oracle_7.x86_64", "suse_12.x86_64", "suse_15.x86_64",
+                  "redhat_pure.redhat_7.aarch64", "oracle_7.aarch64", "suse_12.aarch64", "suse_15.aarch64",
+                  "redhat_pure.redhat_8.x86_64", "oracle_8.x86_64",
+                  "redhat_pure.redhat_9.x86_64", "oracle_9.x86_64",
+                  "(ubuntu_18|ubuntu_20).x86_64",
+                  "(ubuntu_20).aarch64",
+                  "(ubuntu_22).x86_64",
+          },
+        meta => { "report" },
+        comment => concat ("If this class is not reported compliance report",
+                           " checks in Mission Portal will not be done." );
+
+
 }

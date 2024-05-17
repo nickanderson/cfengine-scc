@@ -102,22 +102,30 @@ Defines the day of the month in which the scan should be run. This sets the day 
 #+end_src
 * Classes
 
-** default:scc_inventory_enabled
+** scc:compliance_checks_enabled
 
 Enables reporting of inventory data generated from scc scan reports.
 
 *Note:* *This class needs to be reported.* It's used by the scc compliance report for targeting which hosts checks should be considered against. If this class is not reported the compliance report will not consider the host in it's checks.
 
+This class is automatically defined for the platforms that SCC packages are provided for unless =scc:compliance_checks_disabled= is defined. Find assets and supported platforms here (https://public.cyber.mil/stigs/scap/).
+
+Example defining the class explicitly via Augments (=def.json=).
+
 #+begin_src json
   {
       "variables": {
-          "default:scc_inventory_enabled": {
+          "scc:compliance_checks_enabled": {
               "tags": [ "report" ]
-              "comment": "Enable scc inventory"
+              "comment": "Enable scc compliance report checks."
           }
       }
   }
 #+end_src
+
+** scc:compliance_checks_disabled
+
+When defined compliance checks from the related =compliance-report-scc= module will not be done unless the class =scc:compliance_checks_enabled= is /explicitly/ defined elsewhere.
 
 * Inventory
 
