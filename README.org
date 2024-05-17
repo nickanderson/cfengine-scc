@@ -186,6 +186,28 @@ So that we can target non-working hours for example.
 
 Exposed hour_start and window_length which can be used to define a range of time in which the scan can be scheduled.
 
+** DONE Faster initial report
+CLOSED: [2024-05-17 Fri 14:04]
+It would be nice if an initial scan would come back more quickly.
+
+Scans are automatically scheduled across non-business ours once during the week, so it could be 7 days before some host does it's first scan.
+
+Most conveniently it would work to run from cf-agent perhaps if there is no parsed result or if the target directory were newer than parsed result, but that would cause long agent run.
+
+Perhaps use =at= to scheduled it out a couple minutes in the future.
+
+Oh, =atd= has been swallowed by =systemd=.
+
+So, can use =systemd-run=.
+
+This was implemented and triggers when the scan report directory seems to have been newly created (newer than pid 1) and when there is no inventory data in state. It can be disabled by defining =scc:initial_scan_disabled=.
+
+** DONE Make compliance checks target the correct platforms automatically
+CLOSED: [2024-05-17 Fri 14:06]
+Refactored functionality related to =default:scc_inventory_enabled=.
+
+Now =scc:compliance_checks_enabled= is defined automatically for platforms supported by the SCC scan tool unless =scc:compliance_checks_disabled= is defined. The enabled class is used in the compliance report module to determine which hosts a check should be activated on.
+
 ** Add documentation for inventorying results of "manual checks"
 
 E.g. for Red Hat 8, there are MANY checks that are manual and not automated by the SCC tool, even though the tooling provides copy and paste checks (and fixes) for many of these.
