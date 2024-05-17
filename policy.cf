@@ -107,8 +107,10 @@ bundle agent schedule
         meta => { "report" };
 
   files:
-     # Is this really necessary to initialize the output target?
-     # "$(output_dir)/." create => "true";
+      "$(output_dir)/."
+        create => "true",
+        comment => "The output directory must exist or the scc tool will not scan.";
+
       "/etc/cron.d/security-scan"
         content => concat( "# CFEngine Managed$(const.n)",
                            "$(cron_entry)" ),
