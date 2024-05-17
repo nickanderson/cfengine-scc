@@ -141,6 +141,9 @@ bundle agent schedule
     !scc:initial_scan_disabled.default:systemd::
       "systemd-run"
         arglist => {
+                     "--collect", # Clean up the run history
+                     "--unit=initial-scc-scan",
+                     "--description=Initial scc scan",
                      "--on-active=1",
                      "$(command)"
         },

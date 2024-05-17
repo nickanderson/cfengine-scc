@@ -221,3 +221,9 @@ This way we know our overall pass% per host including manual checks but also wha
 - With a Mission Portal change we could turn the ijnventoried finding ids into links
   - Would not work well if the link target were on the internet (many of these environments are air gapped)
   - Could plausibly make the link target the related condition in Mission Portal (still have a small issue with lack of beauty in details field)
+
+** TODO Do not inventory if value not expanded
+- SCC report Version, SC Date will show unexpanded vars prior to there being report data, stop it.
+#+begin_example
+$(filename_extract[scc_version])	$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])
+#+end_example
