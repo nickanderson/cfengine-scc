@@ -227,3 +227,5 @@ This way we know our overall pass% per host including manual checks but also wha
 #+begin_example
 $(filename_extract[scc_version])	$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])
 #+end_example
+
+** TODO Cleanup old scans so we don't fill a disk
