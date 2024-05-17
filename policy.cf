@@ -228,13 +228,14 @@ bundle agent inventory_report
         "compliance_checks_enabled"
           or => {
                   # each line maps to a single zip artifact used for all platforms on that line
-                  "redhat_pure.redhat_7.x86_64", "oracle_7.x86_64", "suse_12.x86_64", "suse_15.x86_64",
-                  "redhat_pure.redhat_7.aarch64", "oracle_7.aarch64", "suse_12.aarch64", "suse_15.aarch64",
-                  "redhat_pure.redhat_8.x86_64", "oracle_8.x86_64",
-                  "redhat_pure.redhat_9.x86_64", "oracle_9.x86_64",
-                  "(ubuntu_18|ubuntu_20).x86_64",
-                  "(ubuntu_20).aarch64",
-                  "(ubuntu_22).x86_64",
+                  # And, since we are in a namespace, we need to explicitly look for these in the default namespace
+                  "default:redhat_pure.default:redhat_7.default:x86_64",  "default:oracle_7.default:x86_64",  "default:suse_12.default:x86_64",  "default:suse_15.default:x86_64",
+                  "default:redhat_pure.default:redhat_7.default:aarch64", "default:oracle_7.default:aarch64", "default:suse_12.default:aarch64", "default:suse_15.default:aarch64",
+                  "default:redhat_pure.default:redhat_8.default:x86_64",  "default:oracle_8.default:x86_64",
+                  "default:redhat_pure.default:redhat_9.default:x86_64",  "default:oracle_9.default:x86_64",
+                  "(default:ubuntu_18|default:ubuntu_20).default:x86_64",
+                  "(default:ubuntu_20).default:aarch64",
+                  "(default:ubuntu_22).default:x86_64",
           },
         meta => { "report" },
         scope => "namespace",
