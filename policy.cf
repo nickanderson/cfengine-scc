@@ -295,20 +295,20 @@ bundle agent cleanup
   vars:
 
       "scan_session_dirs"
-        slist => lsdir( "/tmp/SCC-RESULT/Sessions/",
+        slist => lsdir( "$(scc:schedule.output_dir)/Sessions/",
                         "\d{4}-\d{2}-\d{2}_\d+", # This regex matches the pattern for each session scan results
                         false );
 
       # Figure out which session is the newest so we can delete the rest
       "session_dir_mtime[$(scan_session_dirs)]"
-        string => filestat( "/tmp/SCC-RESULT/$(scan_session_dirs)", "mtime" );
+        string => filestat( "$(scc:schedule.output_dir)/$(scan_session_dirs)", "mtime" );
       "newest_time" string => max( getvalues( "session_dir_mtime" ), int );
 
 
   methods:
       # Cleanup all but the newest scan session output
       "Purge old scan sessions"
-        usebundle => default:rm_rf( "/tmp/SCC-RESULT/Sessions/$(scan_session_dirs)" ),
+        usebundle => default:rm_rf( "$(scc:schedule.output_dir)/Sessions/$(scan_session_dirs)" ),
         if => not( strcmp( "$(session_dir_mtime[$(scan_session_dirs)])",
                            "$(newest_time)" ) );
 }
