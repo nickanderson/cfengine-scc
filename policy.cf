@@ -206,6 +206,7 @@ bundle agent inventory_parse
 
       "inventory_report_scc_version"
         string => "$(filename_extract[scc_version])",
+        if => isvariable( "filename_extract[scc_version]" ),
         meta => { "inventory", "attribute_name=SCC Report Version" };
 
   commands:
