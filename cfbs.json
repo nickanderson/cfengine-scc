@@ -12,7 +12,7 @@
                 "copy scc-inventory-v0.dat.mustache services/scc-inventory/scc-inventory-v0.dat.mustache",
                 "copy tools/parseXML.py services/scc-inventory/tools/parseXML.py",
                 "policy_files services/scc-inventory/policy.cf",
-                "bundles scc"
+                "bundles scc:main"
             ]
         },
         "compliance-report-scc": {

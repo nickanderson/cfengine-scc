@@ -245,9 +245,9 @@ CLOSED: [2024-05-20 Mon 11:54]
 $(filename_extract[scc_version])	$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])
 #+end_example
 
-** TODO Cleanup old scans so we don't fill a disk
-=/tmp/SCC-RESULT/Sessions=
-
 ** DONE Expose output directory as tunable
 CLOSED: [2024-05-20 Mon 13:26]
 - =scc:schedule.output_dir=
+** DONE Cleanup old scans so we don't fill a disk
+CLOSED: [2024-05-20 Mon 13:33]
+- =$(scc:schedule.output_dir)/Sessions=
