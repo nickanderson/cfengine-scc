@@ -253,9 +253,9 @@ bundle agent inventory_report
         int => length( getindices( "$(results)" ) );
 
       "pass_fail_pct"
-        string => format( "%0.2f", eval( "$(count_results_pass)/($(count_results_pass)+$(count_results_fail))*100", "math", "infix")),
-        if => and( isvariable( "count_results_pass" ),
-                   isvariable( "count_results_fail" ) ),
+        string => format( "%0.2f", "$(with)" ),
+        with => eval( "$(count_results_pass)/($(count_results_pass)+$(count_results_fail))*100", "math", "infix"),
+        if => regcmp( "\d+\.*\d+", "$(with)" ),
         meta => { "inventory", "attribute_name=SCC % pass of checked" },
         comment => "This helps us easily identify the percentage of passing checks from those evaluated";
 
