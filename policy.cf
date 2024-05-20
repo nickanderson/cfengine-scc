@@ -145,8 +145,8 @@ bundle agent schedule
         arglist => {
                      "--collect", # Clean up the run history
                      "--on-active=1",
-                     # "--unit=initial-scc-scan",
-                     # "--description=Initial scc scan",
+                     "--unit=initial-scc-scan",
+                     "--description='Initial scc scan'",
                      "$(command)"
         },
         if => and(
