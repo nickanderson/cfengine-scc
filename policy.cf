@@ -230,8 +230,12 @@ bundle agent inventory_parse
       # The module protocol format is used for efficiency.
 
       "$(statefile).dat"
-        content => concat( '=scc:inventory_report.scc_version=$(inventory_report_scc_version)$(const.n)',
+        content => concat(
+                           '^meta=inventory,attribute_name=SCC Report Version',
+                           '=scc:inventory_report.scc_version=$(inventory_report_scc_version)$(const.n)',
+                           '^meta=inventory,attribute_name=SCC Report Date',
                            '=scc:inventory_report.report_date=$(inventory_report_date)$(const.n)',
+                           '^meta=inventory,attribute_name=SCC Ruleset',
                            '=scc:inventory_report.ruleset=$(inventory_ruleset)$(const.n)');
 }
 
