@@ -147,7 +147,11 @@ bundle agent schedule
                      "--unit=initial-scc-scan",
                      "--description=Initial scc scan",
                      "--on-active=1",
-                     "$(command)"
+                     # "$(command)" # Can't have spaces in arglist elements?
+                     "/opt/scc/cscc",
+                     "--userDir",
+                     "$(output_dir)"
+
         },
         if => and(
                    # Only if the output dir is new since this boot (un-necessary ?)
