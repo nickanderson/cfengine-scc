@@ -198,10 +198,14 @@ bundle agent inventory_parse
       # }
       "inventory_ruleset"
         string => "$(filename_extract[scan_ruleset])",
+        if => isvariable( "filename_extract[scan_ruleset]" ),
         meta => { "inventory", "attribute_name=SCC Ruleset" };
 
       "inventory_report_date"
         string => "$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])",
+        if => and( isvariable( "filename_extract[scan_YYYY]" ),
+                   isvariable( "filename_extract[scan_MM]" ),
+                   isvariable( "filename_extract[scan_DD]" ) ),
         meta => { "inventory", "attribute_name=SCC Report Date" };
 
       "inventory_report_scc_version"
@@ -250,6 +254,8 @@ bundle agent inventory_report
 
       "pass_fail_pct"
         string => format( "%0.2f", eval( "$(count_results_pass)/($(count_results_pass)+$(count_results_fail))*100", "math", "infix")),
+        if => and( isvariable( "count_results_pass" ),
+                   isvariable( "count_results_fail" ) ),
         meta => { "inventory", "attribute_name=SCC % pass of checked" },
         comment => "This helps us easily identify the percentage of passing checks from those evaluated";
 
