@@ -201,33 +201,52 @@ bundle agent inventory_parse
       #   "scan_ss": "03",
       #   "scc_version": "5.9"
       # }
+
+      # NOTE: These inventory items are extracted from the most recent session file name
+      # - If the session is absent, these inventory items will not be reported
       "inventory_ruleset"
         string => "$(filename_extract[scan_ruleset])",
-        if => isvariable( "filename_extract[scan_ruleset]" ),
-        meta => { "inventory", "attribute_name=SCC Ruleset" };
+        if => isvariable( "filename_extract[scan_ruleset]" );
 
       "inventory_report_date"
         string => "$(filename_extract[scan_YYYY])-$(filename_extract[scan_MM])-$(filename_extract[scan_DD])",
         if => and( isvariable( "filename_extract[scan_YYYY]" ),
                    isvariable( "filename_extract[scan_MM]" ),
-                   isvariable( "filename_extract[scan_DD]" ) ),
-        meta => { "inventory", "attribute_name=SCC Report Date" };
+                   isvariable( "filename_extract[scan_DD]" ) );
 
       "inventory_report_scc_version"
         string => "$(filename_extract[scc_version])",
-        if => isvariable( "filename_extract[scc_version]" ),
-        meta => { "inventory", "attribute_name=SCC Report Version" };
+        if => isvariable( "filename_extract[scc_version]" );
 
   commands:
       "/var/cfengine/bin/cfengine-selected-python $(this.promise_dirname)/tools/parseXML.py $(newest_file) --parse-findings > $(statefile)"
         if => and(
                    isvariable( newest_file ) ),
         contain => default:in_shell;
+
+  files:
+
+      # We cache the general scan info for later inventory.
+      # The module protocol format is used for efficiency.
+
+      "$(statefile).dat"
+        content => concat( '=scc:inventory_report.scc_version=$(inventory_report_scc_version)$(const.n)',
+                           '=scc:inventory_report.report_date=$(inventory_report_date)$(const.n)',
+                           '=scc:inventory_report.ruleset=$(inventory_ruleset)$(const.n)');
 }
 
 bundle agent inventory_report
 {
+  classes:
+      # Here we load the general scan info (scc version, scan date, scan ruleset)
+
+      "loaded_general_scan_info"
+        expression => read_module_protocol( "$(scc:inventory_parse.statefile).dat" ),
+        if => fileexists( "$(scc:inventory_parse.statefile).dat" );
+
   vars:
+      # Here we load the scan result details and define inventory details
+
       "report_dat" string => "$(scc:inventory_parse.statefile)";
 
       # The Short Names are unique in a report, so we can parse with data_readstringarray having the result indexed by short name.
