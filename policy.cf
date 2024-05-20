@@ -107,7 +107,10 @@ bundle agent schedule
                           format( "%02d", "$(minute_selected)" ) ),
         meta =>  { "inventory", "attribute_name=SCC Scheduled Scan Time" };
 
-      "output_dir" string => "/tmp/SCC-RESULT";
+      "output_dir"
+        string => "/tmp/SCC-RESULT",
+        if => not( isvariable( "output_dir" ) );
+
       "command" string => "/opt/scc/cscc --userDir $(output_dir)";
 
       "cron_entry"
