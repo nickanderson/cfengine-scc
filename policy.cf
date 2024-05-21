@@ -122,9 +122,15 @@ bundle agent packages_download_bundle
         expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])" );
       "package_present"
         expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])" );
+      "download_dir_present"
+        expression => isdir( "/tmp/SCC-DOWNLOAD" );
+
+  files:
+      "/tmp/SCC-DOWNLOAD/."
+        create => "true";
 
   commands:
-    !package_present::
+    !bundle_present.download_dir_present::
       "$(default:paths.curl)"
         arglist => { "--silent",
                      "--remote-name",
@@ -133,6 +139,7 @@ bundle agent packages_download_bundle
                      "--output-dir",
                      "/tmp/SCC-DOWNLOAD"
         },
+        contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
         if => not( fileexists( concat(
                                        "/tmp/SCC-DOWNLOAD/",
                                        basename( "$(context_map[$(my_context)][url])") ) ) );
