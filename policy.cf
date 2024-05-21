@@ -5,7 +5,7 @@ bundle agent __main__
 
 body file control
 {
-  namespace => "scc";
+        namespace => "scc";
 }
 
 bundle agent main
