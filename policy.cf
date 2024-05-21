@@ -60,7 +60,103 @@ bundle agent packages
 
     package_spawarscc_kept.(scc:DEBUG_packages)::
       "spawarscc is installed";
+}
+bundle agent packages_download_bundle
+{
+  vars:
+      # Map context to the URL for the appropriate package
 
+      "_c" string => "(redhat_7|oracle_7|suse_12|suse_15).x86_64";
+      "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_rhel7_sles12-15_oracle-linux7_x86_64_bundle.zip";
+      "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
+      "context_map[$(_c)][sha256sum]"       string => "43d972dc6ea453d7efd30919fe4c9953724094dcd2d6cfe09512601d7539ac9b";
+      "context_map[$(_c)][pkg]"             string => "scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm";
+
+      "_c" string => "(redhat_7|oracle_7|suse_12|suse_15).aarch64";
+      "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_rhel8_oracle-linux8_aarch64_bundle.zip";
+      "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
+      "context_map[$(_c)][sha256sum]"       string => "43d972dc6ea453d7efd30919fe4c9953724094dcd2d6cfe09512601d7539ac9b";
+      "context_map[$(_c)][pkg]"             string => "scc-5.9.rhel7.x86_64.rpm";
+      "context_map[$(_c)][pkg_sha256]"      string => "fc22534d119a60ed3e50cc64c8ca387a89492e7ea59bb53665457282b0018844";
+
+      "_c" string => "(redhat_8|oracle_8).x86_64";
+      "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_rhel8_oracle-linux8_x86_64_bundle.zip";
+      "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
+      "context_map[$(_c)][sha256sum]"       string => "f8ed281a3913d6359c71b63ad5279a130c5ab3caf38bdac39de45e7cc1a79d2c";
+      "context_map[$(_c)][pkg]"             string => "scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm";
+      "context_map[$(_c)][pkg_sha256]"      string => "b50d0f46aeb37ed4599a4b53f5d1a288ff6f314b9303362f6647e54b3346947a";
+
+      "_c" string => "(redhat_9|oracle_9).x86_64";
+      "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_rhel9_oracle-linux9_x86_64_bundle.zip";
+      "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
+      "context_map[$(_c)][sha256sum]"       string => "775531f09318607e0148b74b8011f6b25d4c7cc30ce61aefb5913a5d35da4f6d";
+      "context_map[$(_c)][pkg]"             string => "scc-5.9.rhel9.x86_64.rpm";
+
+
+      "_c" string => "(ubuntu_18|ubuntu_20).x86_64";
+      "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_ubuntu18_ubuntu20_amd64_bundle.zip";
+      "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
+      "context_map[$(_c)][sha256sum]"       string => "bdbf7cd44cd1dc35d42ca3c03bb0ef047514a8b05a8445cd2148bb608a8267c7";
+      "context_map[$(_c)][pkg]"             string => "scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb";
+      "context_map[$(_c)][pkg_sha256]"      string => "67061ba2d1b8dae89ea34c399e1f28d223731bf799f8c92052bb539e89265c92";
+
+
+      # Stubbed out - Scan does not seem to produce useful report
+      # "context_map[(ubuntu_22).x86_64][url]"        string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_ubuntu22_amd64_bundle.zip";
+      # "context_map[(ubuntu_22).x86_64][bundle_filename]"        string => basename( "$(context_map[(ubuntu_22).x86_64][url])" );
+      # "context_map[(ubuntu_22).x86_64][sha256sum]"  string => "99a9c0d13d8af6d746eb88734b8227b2225806d242bc40ef30719e66d94ca79c";
+      # "context_map[(ubuntu_22).x86_64][pkg]"        string => "scc-5.9.ubuntu.22_amd64.deb";
+      # "context_map[(ubuntu_22).x86_64][pkg_sha256]" string => "79dd588f8088de6a1b0dc279e3fc46b5ce04bab6cab7b5f3e983ac9fedc95617";
+
+      # "context_map[(solaris_11).sparc][url]" string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_solaris11_sparc_bundle.zip";
+
+      "context_map_i"
+        slist => getindices( "context_map" );
+
+
+  commands:
+      "/bin/curl"
+        arglist => { "--silent",
+                     "--remote-name",
+                     "$(context_map[$(context_map_i)][url])",
+                     "--create-dirs",
+                     "--output-dir",
+                     "/tmp/SCC-DOWNLOAD"
+        },
+        if => and(
+                   "$(context_map_i)",
+                   not( fileexists(
+                                    concat(
+                                            "/tmp/SCC-DOWNLOAD/",
+                                            basename( "$(context_map[$(context_map_i)][url])")
+                                          )
+                                   )
+                   )
+        );
+
+  packages:
+
+      "unzip"
+        policy => "present";
+
+  commands:
+
+      # unzip needs installed (apt -y install unzip)
+      "/usr/bin/unzip /tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])"
+        contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
+        if => and(
+                   fileexists("/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])"),
+                   strcmp( "$(context_map[$(context_map_i)][sha256sum])",
+                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])", "sha256" ) ) );
+
+  packages:
+
+      "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][pkg])"
+        policy => "present",
+        if => and( "$(context_map_i)",
+                   strcmp( "$(context_map[$(context_map_i)][pkg_sha256])",
+                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][pkg_sha265])", "sha256" ) )
+        );
 }
 
 bundle agent schedule
