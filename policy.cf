@@ -231,11 +231,11 @@ bundle agent inventory_parse
 
       "$(statefile).dat"
         content => concat(
-                           '^meta=inventory,attribute_name=SCC Report Version',
+                           '^meta=inventory,attribute_name=SCC Report Version$(const.n)',
                            '=scc:inventory_report.scc_version=$(inventory_report_scc_version)$(const.n)',
-                           '^meta=inventory,attribute_name=SCC Report Date',
+                           '^meta=inventory,attribute_name=SCC Report Date$(const.n)',
                            '=scc:inventory_report.report_date=$(inventory_report_date)$(const.n)',
-                           '^meta=inventory,attribute_name=SCC Ruleset',
+                           '^meta=inventory,attribute_name=SCC Ruleset$(const.n)',
                            '=scc:inventory_report.ruleset=$(inventory_ruleset)$(const.n)');
 }
 
