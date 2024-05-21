@@ -161,7 +161,7 @@ bundle agent packages_download_bundle
       "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])"
         policy => "present",
         if => strcmp( "$(context_map[$(my_context)][pkg_sha256])",
-                      file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg_sha256])", "sha256" ) );
+                      file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])", "sha256" ) );
 }
 
 bundle agent schedule
