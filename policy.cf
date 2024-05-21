@@ -335,7 +335,13 @@ bundle agent inventory_report
 bundle agent cleanup
 # @brief "Clean up old scan results."
 {
+  classes:
+
+      "scc_sessions_dir_exists"
+        expression => isdir( "$(output_dir)/Sessions" );
   vars:
+
+    scc_sessions_dir_exists::
 
       "scan_session_dirs"
         slist => lsdir( "$(scc:schedule.output_dir)/Sessions/",
@@ -348,8 +354,9 @@ bundle agent cleanup
         string => filestat( "$(scc:schedule.output_dir)/$(scan_session_dirs)", "mtime" );
       "newest_time" string => max( getvalues( "session_dir_mtime" ), int );
 
-
   methods:
+
+    scc_sessions_dir_exists::
       # Cleanup all but the newest scan session output
       "Purge old scan sessions"
         usebundle => default:rm_rf( "$(scc:schedule.output_dir)/Sessions/$(scan_session_dirs)" ),
