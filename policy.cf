@@ -125,7 +125,7 @@ bundle agent packages_download_bundle
 
   commands:
     !package_present::
-      "/bin/curl"
+      "$(paths.curl)"
         arglist => { "--silent",
                      "--remote-name",
                      "$(context_map[$(my_context)][url])",
