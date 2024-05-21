@@ -119,6 +119,11 @@ bundle agent schedule
         string => "$(minute_selected) $(hour_selected) $(monthday_selected) * $(weekday_selected) root $(command) >/dev/null 2>&1$(const.n)",
         meta => { "report" };
 
+  classes:
+
+      "scc_output_dir_exists"
+        expression => isdir( "$(output_dir)" );
+
   files:
       "$(output_dir)/."
         create => "true",
@@ -145,7 +150,7 @@ bundle agent schedule
       # This is done if the output dir seems to have been created since the host
       # booted AND if there is no inventory statefile yet generated.
 
-    !scc:initial_scan_disabled.default:systemd::
+    !scc:initial_scan_disabled.default:systemd.scc:scc_output_dir_exists::
       "systemd-run"
         arglist => {
                      "--collect", # Clean up the run history
