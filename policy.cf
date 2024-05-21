@@ -113,50 +113,48 @@ bundle agent packages_download_bundle
       "context_map_i"
         slist => getindices( "context_map" );
 
+      "my_context"
+        string => "$(context_map_i)",
+        if => "$(context_map_i)";
+
+  classes:
+      "bundle_present"
+        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])" );
+      "package_present"
+        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])" );
 
   commands:
+    !package_present::
       "/bin/curl"
         arglist => { "--silent",
                      "--remote-name",
-                     "$(context_map[$(context_map_i)][url])",
+                     "$(context_map[$(my_context)][url])",
                      "--create-dirs",
                      "--output-dir",
                      "/tmp/SCC-DOWNLOAD"
         },
+        if => not( fileexists( concat(
+                                       "/tmp/SCC-DOWNLOAD/",
+                                       basename( "$(context_map[$(my_context)][url])") ) ) );
+    !package_present.bundle_present::
+      # unzip needs installed (apt -y install unzip)
+      "/usr/bin/unzip /tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])"
+        contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
         if => and(
-                   "$(context_map_i)",
-                   not( fileexists(
-                                    concat(
-                                            "/tmp/SCC-DOWNLOAD/",
-                                            basename( "$(context_map[$(context_map_i)][url])")
-                                          )
-                                   )
-                   )
-        );
-
+                   fileexists("/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])"),
+                   strcmp( "$(context_map[$(my_context)][sha256sum])",
+                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])", "sha256" ) ) );
   packages:
 
       "unzip"
         policy => "present";
 
-  commands:
+    package_present::
 
-      # unzip needs installed (apt -y install unzip)
-      "/usr/bin/unzip /tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])"
-        contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
-        if => and(
-                   fileexists("/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])"),
-                   strcmp( "$(context_map[$(context_map_i)][sha256sum])",
-                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][bundle_filename])", "sha256" ) ) );
-
-  packages:
-
-      "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][pkg])"
+      "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])"
         policy => "present",
-        if => and( "$(context_map_i)",
-                   strcmp( "$(context_map[$(context_map_i)][pkg_sha256])",
-                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(context_map_i)][pkg_sha265])", "sha256" ) )
-        );
+        if => strcmp( "$(context_map[$(my_context)][pkg_sha256])",
+                      file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg_sha265])", "sha256" ) );
 }
 
 bundle agent schedule
