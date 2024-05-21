@@ -136,7 +136,7 @@ bundle agent packages_download_bundle
                      "--remote-name",
                      "$(context_map[$(my_context)][url])",
                      "--create-dirs",
-                     "--output-dir",
+                     # "--output-dir", # Older platforms don't know this option
                      "/tmp/SCC-DOWNLOAD"
         },
         contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
