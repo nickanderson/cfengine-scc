@@ -26,30 +26,32 @@ bundle agent packages
         action => default:policy( "warn" ),
         classes => default:results( "bundle", "package_spawarscc" );
 
-    package_spawarscc_not_kept.redhat_8::
-      # TODO Redact this, for testing
-      # Install the package if it's found in an expected location
-      "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm"
-        policy => "present",
-        if => fileexists( "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm" );
-    package_spawarscc_not_kept.redhat_9::
-      "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel9.x86_64.rpm"
-        policy => "present",
-        if => fileexists( "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel8.x86_64.rpm" );
-    package_spawarscc_not_kept.redhat_7::
-      "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm"
-        policy => "present",
-        if => fileexists( "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm" );
-    package_spawarscc_not_kept.ubuntu_22::
-      "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb"
-        policy => "present",
-        if => fileexists( "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb" );
-    package_spawarscc_not_kept.(ubuntu_18|ubuntu_20)::
-      "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb"
-        policy => "present",
-        if => fileexists( "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb" );
+    # package_spawarscc_not_kept.redhat_8::
+    #   # TODO Redact this, for testing
+    #   # Install the package if it's found in an expected location
+    #   "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm"
+    #     policy => "present",
+    #     if => fileexists( "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm" );
+    # package_spawarscc_not_kept.redhat_9::
+    #   "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel9.x86_64.rpm"
+    #     policy => "present",
+    #     if => fileexists( "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel8.x86_64.rpm" );
+    # package_spawarscc_not_kept.redhat_7::
+    #   "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm"
+    #     policy => "present",
+    #     if => fileexists( "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm" );
+    # package_spawarscc_not_kept.ubuntu_22::
+    #   "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb"
+    #     policy => "present",
+    #     if => fileexists( "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb" );
+    # package_spawarscc_not_kept.(ubuntu_18|ubuntu_20)::
+    #   "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb"
+    #     policy => "present",
+    #     if => fileexists( "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb" );
 
-
+  methods:
+    scc:enable_download_and_install::
+      "packages_download_bundle";
 
   reports:
     package_spawarscc_not_kept::
@@ -92,14 +94,12 @@ bundle agent packages_download_bundle
       "context_map[$(_c)][sha256sum]"       string => "775531f09318607e0148b74b8011f6b25d4c7cc30ce61aefb5913a5d35da4f6d";
       "context_map[$(_c)][pkg]"             string => "scc-5.9.rhel9.x86_64.rpm";
 
-
       "_c" string => "(ubuntu_18|ubuntu_20).x86_64";
       "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_ubuntu18_ubuntu20_amd64_bundle.zip";
       "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
       "context_map[$(_c)][sha256sum]"       string => "bdbf7cd44cd1dc35d42ca3c03bb0ef047514a8b05a8445cd2148bb608a8267c7";
       "context_map[$(_c)][pkg]"             string => "scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb";
       "context_map[$(_c)][pkg_sha256]"      string => "67061ba2d1b8dae89ea34c399e1f28d223731bf799f8c92052bb539e89265c92";
-
 
       # Stubbed out - Scan does not seem to produce useful report
       # "context_map[(ubuntu_22).x86_64][url]"        string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_ubuntu22_amd64_bundle.zip";
