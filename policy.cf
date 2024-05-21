@@ -320,7 +320,8 @@ bundle agent cleanup
       "scan_session_dirs"
         slist => lsdir( "$(scc:schedule.output_dir)/Sessions/",
                         "\d{4}-\d{2}-\d{2}_\d+", # This regex matches the pattern for each session scan results
-                        false );
+                        false ),
+        if => isdir( "$(scc:schedule.output_dir)" );
 
       # Figure out which session is the newest so we can delete the rest
       "session_dir_mtime[$(scan_session_dirs)]"
