@@ -26,12 +26,16 @@ bundle agent packages
         action => default:policy( "warn" ),
         classes => default:results( "bundle", "package_spawarscc" );
 
-    package_spawarscc_not_kept::
+    package_spawarscc_not_kept.redhat_8::
       # TODO Redact this, for testing
       # Install the package if it's found in an expected location
       "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm"
         policy => "present",
         if => fileexists( "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm" );
+    package_spawarscc_not_kept.redhat_9::
+      "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel9.x86_64.rpm"
+        policy => "present",
+        if => fileexists( "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel8.x86_64.rpm" );
 
   reports:
     package_spawarscc_not_kept::
