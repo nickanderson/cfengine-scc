@@ -40,6 +40,10 @@ bundle agent packages
       "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm"
         policy => "present",
         if => fileexists( "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm" );
+    package_spawarscc_not_kept.ubuntu_22::
+      "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb"
+        policy => "present",
+        if => fileexists( "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb" );
 
 
   reports:
