@@ -12,7 +12,8 @@
         "copy scc-inventory-v0.dat.mustache services/scc-inventory/scc-inventory-v0.dat.mustache",
         "copy tools/parseXML.py services/scc-inventory/tools/parseXML.py",
         "policy_files services/scc-inventory/policy.cf",
-        "bundles scc:main"
+        "bundles scc:main",
+        "input scc-inventory/input.json def.json"
       ],
       "input": [
         {
