@@ -11,10 +11,21 @@ body file control
 bundle agent main
 {
   methods:
+      "scc:settings";
       "scc:packages";
       "scc:schedule";
       "scc:inventory";
       "scc:cleanup";
+}
+
+bundle agent settings
+{
+  vars:
+      "contexts_i" slist => getindices( "scc:settings.enable_download_and_install_contexts" );
+
+  reports:
+      "MARK $(this.namespace):$(this.bundle)";
+      "Should DL and install when '$(enable_download_and_install[$(contexts_i)][context])'";
 }
 
 bundle agent packages
