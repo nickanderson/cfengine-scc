@@ -1,31 +1,46 @@
 {
-    "name": "scc",
-    "description": "Module repo for scc, the DoD SCAP scanning tool.",
-    "provides": {
-        "scc-inventory": {
-            "description": "Inventory SCC scan results.",
-            "tags": [ "experimental" ],
-            "repo": "https://github.com/nickanderson/cfengine-scc",
-            "by": "https://github.com/nickanderson",
-            "steps": [
-                "copy policy.cf services/scc-inventory/policy.cf",
-                "copy scc-inventory-v0.dat.mustache services/scc-inventory/scc-inventory-v0.dat.mustache",
-                "copy tools/parseXML.py services/scc-inventory/tools/parseXML.py",
-                "policy_files services/scc-inventory/policy.cf",
-                "bundles scc:main"
-            ]
-        },
-        "compliance-report-scc": {
-            "description": "Compliance report with SCC checks",
-            "dependencies": ["compliance-report-imports", "scc-inventory"],
-            "tags": ["experimental", "security", "compliance"],
-            "repo": "https://github.com/nickanderson/cfengine-lynis",
-            "by": "https://github.com/nickanderson/",
-            "steps": [
-                "copy ./tools/SCC-compliance.json .no-distrib/compliance-report-definitions/SCC-compliance.json"
-            ]
-
+  "name": "scc",
+  "description": "Module repo for scc, the DoD SCAP scanning tool.",
+  "provides": {
+    "scc-inventory": {
+      "description": "Inventory SCC scan results.",
+      "tags": ["experimental"],
+      "repo": "https://github.com/nickanderson/cfengine-scc",
+      "by": "https://github.com/nickanderson",
+      "steps": [
+        "copy policy.cf services/scc-inventory/policy.cf",
+        "copy scc-inventory-v0.dat.mustache services/scc-inventory/scc-inventory-v0.dat.mustache",
+        "copy tools/parseXML.py services/scc-inventory/tools/parseXML.py",
+        "policy_files services/scc-inventory/policy.cf",
+        "bundles scc:main"
+      ],
+      "input": [
+        {
+          "type": "list",
+          "variable": "scc:settings:enable_download_and_install_contexts",
+          "label": "Download and install contexts",
+          "subtype": [
+            {
+              "key": "context",
+              "type": "string",
+              "label": "Context (CFEngine class expression)",
+              "question": "In what context should software be downloaded and installed? (CFEngine class expression)",
+              "default": "!any"
+            }
+          ],
+          "while": "Do you want to specify any additional contexts?"
         }
-
+      ]
+    },
+    "compliance-report-scc": {
+      "description": "Compliance report with SCC checks",
+      "dependencies": ["compliance-report-imports", "scc-inventory"],
+      "tags": ["experimental", "security", "compliance"],
+      "repo": "https://github.com/nickanderson/cfengine-lynis",
+      "by": "https://github.com/nickanderson/",
+      "steps": [
+        "copy ./tools/SCC-compliance.json .no-distrib/compliance-report-definitions/SCC-compliance.json"
+      ]
     }
+  }
 }
