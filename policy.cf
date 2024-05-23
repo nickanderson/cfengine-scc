@@ -23,23 +23,21 @@ bundle agent settings
   vars:
       "contexts_i" slist => getindices( "scc:settings.enable_download_and_install_contexts" );
 
-  reports:
-      "MARK $(this.namespace):$(this.bundle)";
-      "Should DL and install when '$(enable_download_and_install[$(contexts_i)][context])'";
-}
-
-bundle agent packages
-{
   classes:
-
       # As of 2024-05-23 cfbs module input did not support boolean types, so a
       # list of strings is exposed for enabling automatic download and install.
       # If any of the provided contexts is true automatic download and install
       # is enabled.
 
-      "download_and_install_enabled"
-        expression => "$(scc:settings.enable_download_and_install_contexts)",
+      "download_and_install_enabled" -> { "scc:packages" }
+        scope => "namespace", # We need to use this class in other bundles (packages)
+        expression => "$(enable_download_and_install_contexts[$(contexts_i)][context])",
         comment => "We want to allow enabling this feature by way of module input";
+}
+
+bundle agent packages
+{
+  classes:
 
   packages:
 
