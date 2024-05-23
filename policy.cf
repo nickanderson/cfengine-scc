@@ -1,8 +1,3 @@
-bundle agent __main__
-{
-      methods: "scc";
-}
-
 body file control
 {
         namespace => "scc";
@@ -37,8 +32,6 @@ bundle agent settings
 
 bundle agent packages
 {
-  classes:
-
   packages:
 
       "spawarscc"
@@ -49,19 +42,16 @@ bundle agent packages
   methods:
     scc:download_and_install_enabled.package_spawarscc_not_kept::
       "Download and Install SCC"
-        usebundle => "packages_download_bundle";
+        usebundle => "packages_download_bundle_and_install";
 
   reports:
-    package_spawarscc_not_kept::
+    package_spawarscc_not_kept.default:inform_mode::
       "$(with)"
         with => concat( "spawarscc is not installed, please retreive and",
                         " install the version appropriate for your platform from",
                         " https://public.cyber.mil/stigs/scap/" );
-
-    package_spawarscc_kept.(scc:DEBUG_packages)::
-      "spawarscc is installed";
 }
-bundle agent packages_download_bundle
+bundle agent packages_download_bundle_and_install
 {
   vars:
       # Map context to the URL for the appropriate package
@@ -120,51 +110,73 @@ bundle agent packages_download_bundle
         string => "$(context_map_i)",
         if => "$(context_map_i)";
 
-  classes:
-      "bundle_present"
-        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])" );
-      "package_present"
-        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])" );
-      "download_dir_present"
-        expression => isdir( "/tmp/SCC-DOWNLOAD" );
-
   files:
       "/tmp/SCC-DOWNLOAD/."
         create => "true";
+
+  methods:
+      "Download and unpack"
+        usebundle => packages_download_bundle( "$(context_map[$(my_context)][url])",
+                                               "$(context_map[$(my_context)][bundle_filename])",
+                                               "$(context_map[$(my_context)][sha256sum])",
+                                               "$(context_map[$(my_context)][pkg])" );
+
+      "Install from unpacked bundle"
+        usebundle => packages_install_from_bundle( "$(context_map[$(my_context)][pkg])",
+                                                   "$(context_map[$(my_context)][pkg_sha256])" );
+}
+
+bundle agent packages_download_bundle( bundle_url, bundle_filename, bundle_sha256, pkg_filename )
+{
+  classes:
+      "bundle_present"
+        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(bundle_filename)" );
+
+      "package_present"
+        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(pkg_filename)" );
+
+      "download_dir_present"
+        expression => isdir( "/tmp/SCC-DOWNLOAD" );
 
   commands:
     !bundle_present.download_dir_present::
       "$(default:paths.curl)"
         arglist => { "--silent",
                      "--remote-name",
-                     "$(context_map[$(my_context)][url])",
-                     "--create-dirs",
-                     # "--output-dir", # Older platforms don't know this option
-                     "/tmp/SCC-DOWNLOAD"
+                     "$(bundle_url)"
         },
-        contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
-        if => not( fileexists( concat(
-                                       "/tmp/SCC-DOWNLOAD/",
-                                       basename( "$(context_map[$(my_context)][url])") ) ) );
+        contain => default:in_dir("/tmp/SCC-DOWNLOAD");
+
     !package_present.bundle_present::
       # unzip needs installed (apt -y install unzip)
-      "/usr/bin/unzip /tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])"
+      "/usr/bin/unzip /tmp/SCC-DOWNLOAD/$(bundle_filename)"
         contain => default:in_dir("/tmp/SCC-DOWNLOAD"),
-        if => and(
-                   fileexists("/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])"),
-                   strcmp( "$(context_map[$(my_context)][sha256sum])",
-                           file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][bundle_filename])", "sha256" ) ) );
+        if => strcmp( "$(bundle_sha256)",
+                      file_hash( "/tmp/SCC-DOWNLOAD/$(bundle_filename)", "sha256" ) );
   packages:
+
+    !package_present::
+
+      # We really only need to make sure unzip is installed if the package is not present
 
       "unzip"
         policy => "present";
+}
+
+bundle agent packages_install_from_bundle( pkg_filename, pkg_sha256 )
+{
+  classes:
+      "package_present"
+        expression => fileexists( "/tmp/SCC-DOWNLOAD/$(pkg_filename)" );
+
+  packages:
 
     package_present::
 
-      "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])"
+      "/tmp/SCC-DOWNLOAD/$(pkg_filename)"
         policy => "present",
-        if => strcmp( "$(context_map[$(my_context)][pkg_sha256])",
-                      file_hash( "/tmp/SCC-DOWNLOAD/$(context_map[$(my_context)][pkg])", "sha256" ) );
+        if => strcmp( "$(pkg_sha256)",
+                      file_hash( "/tmp/SCC-DOWNLOAD/$(pkg_filename)", "sha256" ) );
 }
 
 bundle agent schedule
