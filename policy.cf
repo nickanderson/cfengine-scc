@@ -26,32 +26,10 @@ bundle agent packages
         action => default:policy( "warn" ),
         classes => default:results( "bundle", "package_spawarscc" );
 
-    # package_spawarscc_not_kept.redhat_8::
-    #   # TODO Redact this, for testing
-    #   # Install the package if it's found in an expected location
-    #   "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm"
-    #     policy => "present",
-    #     if => fileexists( "/vagrant/scc-5.9_rhel8_x86_64/scc-5.9.rhel8.x86_64.rpm" );
-    # package_spawarscc_not_kept.redhat_9::
-    #   "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel9.x86_64.rpm"
-    #     policy => "present",
-    #     if => fileexists( "/vagrant/scc-5.9_rhel9_x86_64/scc-5.9.rhel8.x86_64.rpm" );
-    # package_spawarscc_not_kept.redhat_7::
-    #   "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm"
-    #     policy => "present",
-    #     if => fileexists( "/vagrant/scc-5.9_rhel7_x86_64/scc-5.9.rhel7.x86_64.rpm" );
-    # package_spawarscc_not_kept.ubuntu_22::
-    #   "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb"
-    #     policy => "present",
-    #     if => fileexists( "/vagrant/scc-5.9_ubuntu22_amd64/scc-5.9.ubuntu.22_amd64.deb" );
-    # package_spawarscc_not_kept.(ubuntu_18|ubuntu_20)::
-    #   "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb"
-    #     policy => "present",
-    #     if => fileexists( "/vagrant/scc-5.9_ubuntu18_amd64/scc-5.9.ubuntu.18_amd64.deb" );
-
   methods:
-    scc:enable_download_and_install::
-      "packages_download_bundle";
+    scc:download_and_install_enabled.package_spawarscc_not_kept::
+      "Download and Install SCC"
+        usebundle => "packages_download_bundle";
 
   reports:
     package_spawarscc_not_kept::
@@ -67,6 +45,10 @@ bundle agent packages_download_bundle
 {
   vars:
       # Map context to the URL for the appropriate package
+
+      # For a bit less repition in the policy, for each package I define _c as a
+      # context that is re-used for the following related promises.
+      # This is probably better managed by using classfiltercsv().
 
       "_c" string => "(redhat_7|oracle_7|suse_12|suse_15).x86_64";
       "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_rhel7_sles12-15_oracle-linux7_x86_64_bundle.zip";
@@ -94,6 +76,7 @@ bundle agent packages_download_bundle
       "context_map[$(_c)][sha256sum]"       string => "775531f09318607e0148b74b8011f6b25d4c7cc30ce61aefb5913a5d35da4f6d";
       "context_map[$(_c)][pkg]"             string => "scc-5.9.rhel9.x86_64.rpm";
 
+      # Ubuntu 18 (Bionic) & 20 (Focal) - 64Bit
       "_c" string => "(ubuntu_18|ubuntu_20).x86_64";
       "context_map[$(_c)][url]"             string => "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.9_ubuntu18_ubuntu20_amd64_bundle.zip";
       "context_map[$(_c)][bundle_filename]" string => basename( "$(context_map[$(_c)][url])" );
@@ -254,14 +237,6 @@ bundle agent schedule
         content => concat( "# CFEngine Managed$(const.n)",
                            "$(cron_entry)" ),
         perms => default:mog( "644", "root", "root" ); # Wth, mode 0700!?
-
-      # [root@hub scc]# cf-agent -KI
-      # info: Created directory '/tmp/SCC-RESULT/.', mode 0700
-      # info: Updated file '/etc/cron.hourly/security-scan' with content '# CFEngine Managed
-      # 0 15 * * * /opt/scc/cscc --userDir /tmp/SCC-RESULT >/dev/null 2>&1'
-      # R: Newest: $(newest_file)
-      # error: A method attempted to use a bundle 'inventory_read' that was apparently not defined
-      # error: Fatal CFEngine error: Aborting due to missing bundle 'inventory_read'
 
   commands:
 

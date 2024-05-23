@@ -130,10 +130,12 @@ Example defining the class explicitly via Augments (=def.json=).
 
 #+begin_src json
   {
-      "variables": {
+      "classes": {
           "scc:compliance_checks_enabled": {
-              "tags": [ "report" ]
-              "comment": "Enable scc compliance report checks."
+              "class_expressions": [ "(redhat_7|redhat_8|redhat_9).x86_64::",
+                                     "(ubuntu_18|ubuntu_20).x86_64::"
+                                   ],
+              "comment": "Enable scc compliance report checks for redhat 7-9 on 64bit hosts and ubuntu 18-20 64bit."
           }
       }
   }
@@ -146,6 +148,24 @@ When defined compliance checks from the related =compliance-report-scc= module w
 ** scc:initial_scan_disabled
 
 If this class is not defined (not defined by default) an initial scan is executed. This facilitates getting scan report data back quickly when the module is first deployed. If deploying to a large infrastructure you may want to define this class so that all hosts do not kick off a scan in short order and are instead waiting for their regularly scheduled scan.
+
+** scc:download_and_install_enabled
+
+If this class is defined and =spawarscc= is not installed the package will be automatically downloaded, and if the hashes verify installed.
+
+Example defining the class via Augments:
+
+#+begin_src json
+  {
+      "classes": {
+          "scc:download_and_install_enabled": {
+              "class_expressions": [ "redhat_7::" ],
+              "tags": [ "report" ],
+              "comment": "Enable automatic download and install of scc tooling for redhat 7 hosts."
+          }
+      }
+  }
+#+end_src
 
 * Inventory
 
