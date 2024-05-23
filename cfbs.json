@@ -17,7 +17,9 @@
       "input": [
         {
           "type": "list",
-          "variable": "scc:settings:enable_download_and_install_contexts",
+          "variable": "enable_download_and_install_contexts",
+          "namespace": "scc",
+          "bundle": "settings",
           "label": "Download and install contexts",
           "subtype": [
             {
